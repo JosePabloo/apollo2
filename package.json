@@ -16,7 +16,7 @@
     "customize-cra": "^0.9.1",
     "firebase": "^7.14.1",
     "mdi-material-ui": "^6.13.2",
-    "moment": "2.18.1",
+    "moment": "^2.24.0",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.5",
     "react-dom": "^16.13.1",
