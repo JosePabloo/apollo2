@@ -8,7 +8,7 @@ import HomePage from "../HomePage";
 import AdminPage from "../AdminPage";
 import UserPage from "../UserPage";
 import NotFoundPage from "../NotFoundPage";
-
+import DashboardPage from "../Dashboard";
 class Router extends Component {
   render() {
     // Properties
@@ -32,6 +32,9 @@ class Router extends Component {
             ) : (
               <Redirect to="/" />
             )}
+          </Route>
+          <Route path="/dashboard">
+            {user ? <DashboardPage /> : <Redirect to="/" />}
           </Route>
 
           <Route path="/user/:userId">
