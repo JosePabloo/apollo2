@@ -6,11 +6,9 @@ import PropTypes from "prop-types";
 
 import { withRouter } from "react-router-dom";
 
-import { auth, firestore } from "../../firebase";
+import { firestore } from "../../firebase";
 
 import Button from "@material-ui/core/Button";
-
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 
 import AddIcon from "@material-ui/icons/Add";
 
@@ -20,7 +18,7 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
+
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 const styles = (theme) => ({
@@ -64,7 +62,7 @@ class DashboardPage extends Component {
   };
 
   addClientClick = () => {
-    var db = firestore;
+    //  var db = firestore;
     console.log("the button has been pressed adding clitn ");
     this.handleClickOpen();
 
@@ -86,7 +84,7 @@ class DashboardPage extends Component {
 
   render() {
     let dateAndTime = moment().format("DD/MM/YYYY HH:mm:ss");
-    const { user } = this.props;
+    //const { user } = this.props;
     const classes = withStyles();
     console.log(dateAndTime);
 
@@ -116,20 +114,69 @@ class DashboardPage extends Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="form-dialog-title">New Client</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              To subscribe to this website, please enter your email address
-              here. We will send updates occasionally.
-            </DialogContentText>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Email Address"
-              type="email"
-              fullWidth
-            />
+            <form noValidate autoComplete="off">
+              <div>
+                <TextField
+                  required
+                  autoFocus
+                  margin="dense"
+                  id="Fname"
+                  label="Frist Name"
+                  type="name"
+                  fullWidth
+                />
+
+                <TextField
+                  margin="dense"
+                  id="Lname"
+                  label="Last Name"
+                  type="name"
+                  fullWidth
+                />
+
+                <TextField
+                  margin="dense"
+                  id="Address"
+                  label="Address"
+                  type="name"
+                  fullWidth
+                />
+
+                <TextField
+                  margin="dense"
+                  id="City"
+                  label="City"
+                  type="name"
+                  fullWidth
+                />
+
+                <TextField
+                  margin="dense"
+                  id="zipcode"
+                  label="Zipcode"
+                  type="name"
+                  fullWidth
+                />
+
+                <TextField
+                  margin="dense"
+                  id="phoneNumber"
+                  label="Phone"
+                  type="name"
+                  fullWidth
+                />
+
+                <TextField
+                  margin="dense"
+                  id="email"
+                  label="Email"
+                  type="name"
+                  fullWidth
+                />
+              </div>
+            </form>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
