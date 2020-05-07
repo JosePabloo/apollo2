@@ -33,7 +33,11 @@ class DashboardPage extends Component {
     this.state = {
       open: false,
       setOpen: false,
+      value: ''
+      
     };
+    this.handleChange = this.handleChange.bind(this);
+    
   }
 
   handleClickOpen = () => {
@@ -82,8 +86,18 @@ class DashboardPage extends Component {
     // });
   };
 
+  handleChange(event) {
+    console.log(event.target.value)
+    //this.setState({value: event.target.value});
+    this.setState({
+      value: event.target.value,
+    });
+    
+  }
+
   render() {
     let dateAndTime = moment().format("DD/MM/YYYY HH:mm:ss");
+    
     //const { user } = this.props;
     const classes = withStyles();
     console.log(dateAndTime);
@@ -126,6 +140,9 @@ class DashboardPage extends Component {
                   label="Frist Name"
                   type="name"
                   fullWidth
+                  value={this.state.value} 
+                  onChange={this.handleChange}
+                 
                 />
 
                 <TextField
