@@ -79,14 +79,30 @@ class DashboardPage extends Component {
     this.handleClearDataFromNewClientForm()
   };
 
-  snackbarOpen = (message) => {
+  snackbarOpen = (numbers,type) => {
+    var message = "";
+    //Type is the type of message that youre setting. 
+    // 1 = Field need to be filed out. 
+    // 2 success! 
+    // 3 error. 
+    if(type === 1){
+      message = "There are " +numbers + " fields that need to be filled out." 
+    }
+    if(type === 2){
+      message = numbers
+    }
+    if(type === 3){
+      message =  "Error adding document: " + numbers
+    }
+
+    
     this.setState({
-      snackbarMessage:"There are " +message + " fields that need to be filled out." , 
+      snackbarMessage:message, 
       snackbarOpen: true,
       snackbarSetOpen: true,
       
     });
-    console.log("the messge being passed in is: ", message)
+    console.log(message)
   };
 
   snackbarClose = () => {
@@ -109,27 +125,13 @@ class DashboardPage extends Component {
   };
 
   addClientClick = () => {
-    //  var db = firestore;
+
     console.log("the button has been pressed adding clitn ");
     this.handleClickOpen();
 
   
    // this.handleClearDataFromNewClientForm()
 
-    //   db.collection("clients").add({
-    //     FristName: "Tokyo",
-    //     LastName: "Japan",
-    //     timestamp: dateAndTime,
-    //     BillingAddress: { Address: "3000 9th Lane", City: "Anoka", Zipcode: "55421" },
-    //     PhoneNumber: "612-324-432",
-
-    // })
-    // .then(function(docRef) {
-    //     console.log("Document written with ID: ", docRef.id);
-    // })
-    // .catch(function(error) {
-    //     console.error("Error adding document: ", error);
-    // });
   };
 
   handleFnameChange(event) {
@@ -186,7 +188,8 @@ class DashboardPage extends Component {
   
   handleAddClientButtonHasBeenClicked = () => {
     const { Fname, Lname, Address, City, Zipcode,Email,phoneNumber, } = this.state;
-    //Checking to see if the data is filled in. 
+    //Checking to see if the data is filled in.
+    var db = firestore; 
     var flagTrigger = 0; 
     Fname !==  "" ? console.log("YES") :  flagTrigger = flagTrigger + 1
     Lname !==  "" ? console.log("YES") : flagTrigger = flagTrigger + 1
@@ -197,7 +200,22 @@ class DashboardPage extends Component {
     phoneNumber !==  "" ? console.log("YES"): flagTrigger = flagTrigger + 1
 
     if (flagTrigger != 0) {
-      this.snackbarOpen(flagTrigger)
+      this.snackbarOpen(flagTrigger, 1)
+    }else{
+        db.collection("clients").add({
+        FristName: Fname,
+        LastName: Lname,
+        //timestamp: dateAndTime,
+        BillingAddress: { Address: Address, City: City, Zipcode: Zipcode },
+        PhoneNumber: phoneNumber,
+        Email: Email
+
+    })
+    .catch(function(error) {
+      console.log("errirrrr!!!" , error)
+    });
+    this.handleClose()
+
     }
 
     //Check to see how many of the itmes are not filled. Then show the snackbars.
