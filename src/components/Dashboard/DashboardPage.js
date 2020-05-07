@@ -56,18 +56,13 @@ class DashboardPage extends Component {
       open: true,
     });
   };
+
   handleClose = () => {
     this.setState({
       setOpen: false,
       open: false,
     });
-    console.log(this.state.Fname)
-    console.log(this.state.Lname)
-    console.log(this.state.Address)
-    console.log(this.state.City)
-    console.log(this.state.Zipcode)
-    console.log(this.state.phoneNumber)
-    console.log(this.state.Email)
+    this.handleClearDataFromNewClientForm()
   };
 
   getClientData = () => {
@@ -86,6 +81,9 @@ class DashboardPage extends Component {
     //  var db = firestore;
     console.log("the button has been pressed adding clitn ");
     this.handleClickOpen();
+
+  
+   // this.handleClearDataFromNewClientForm()
 
     //   db.collection("clients").add({
     //     FristName: "Tokyo",
@@ -140,6 +138,35 @@ class DashboardPage extends Component {
     });
   }
 
+  handleClearDataFromNewClientForm(){
+    this.setState({
+      Fname: "",
+      Lname: "",
+      Address: "",
+      phoneNumber: "",
+      City: "",
+      Zipcode: "",
+      Email: "",
+    });
+    
+  }
+  
+  handleAddClientButtonHasBeenClicked = () => {
+    const { Fname, Lname, Address, City, Zipcode,Email,phoneNumber } = this.state;
+    //Checking to see if the data is filled in. 
+    Fname !==  "" ? console.log("yes its filled. ") : console.log("No its not fulled")
+    Lname !==  "" ? console.log("yes its filled. ") : console.log("No its not fulled")
+    Address !==  "" ? console.log("yes its filled. ") : console.log("No its not fulled")
+    City !==  "" ? console.log("yes its filled. ") : console.log("No its not fulled")
+    Zipcode !==  "" ? console.log("yes its filled. ") : console.log("No its not fulled")
+    Email !==  "" ? console.log("yes its filled. ") : console.log("No its not fulled")
+    phoneNumber !==  "" ? console.log("yes its filled. ") : console.log("No its not fulled")
+
+    console.log("this is the stuff that was got from the user: ", Fname, Lname, Address, phoneNumber, City, Zipcode, Email)
+    //Check to see if nothing it null or undefined. 
+    // if posted succeffully, then close. 
+
+  }
 
 
 
@@ -259,8 +286,8 @@ class DashboardPage extends Component {
               Cancel
             </Button>
             {/* TODO Need to create a sumbit function and another function that clears the state once its submited or cancled.  */}
-            <Button onClick={this.handleClose} color="primary"> 
-              Subscribe
+            <Button onClick={this.handleAddClientButtonHasBeenClicked} color="primary"> 
+              Sumbit
             </Button>
           </DialogActions>
         </Dialog>
