@@ -40,6 +40,7 @@ class DashboardPage extends Component {
       open: false,
       setOpen: false,
 
+      snackbarMessage: "",
       snackbarOpen: false,
       snackbarSetOpen: false,
       
@@ -78,11 +79,14 @@ class DashboardPage extends Component {
     this.handleClearDataFromNewClientForm()
   };
 
-  snackbarOpen = () => {
+  snackbarOpen = (message) => {
     this.setState({
+      snackbarMessage:"There are " +message + " fields that need to be filled out." , 
       snackbarOpen: true,
       snackbarSetOpen: true,
+      
     });
+    console.log("the messge being passed in is: ", message)
   };
 
   snackbarClose = () => {
@@ -183,16 +187,21 @@ class DashboardPage extends Component {
   handleAddClientButtonHasBeenClicked = () => {
     const { Fname, Lname, Address, City, Zipcode,Email,phoneNumber, } = this.state;
     //Checking to see if the data is filled in. 
-    Fname !==  "" ? console.log("YES") :  this.snackbarOpen()
-    Lname !==  "" ? console.log("YES") : console.log("No its not fulled")
-    Address !==  "" ? console.log("YES") : console.log("No its not fulled")
-    City !==  "" ? console.log("YES") : console.log("No its not fulled")
-    Zipcode !==  "" ? console.log("YES") : console.log("No its not fulled")
-    Email !==  "" ? console.log("YES") : console.log("No its not fulled")
-    phoneNumber !==  "" ? console.log("YES"): console.log("No its not fulled")
+    var flagTrigger = 0; 
+    Fname !==  "" ? console.log("YES") :  flagTrigger = flagTrigger + 1
+    Lname !==  "" ? console.log("YES") : flagTrigger = flagTrigger + 1
+    Address !==  "" ? console.log("YES") : flagTrigger = flagTrigger + 1
+    City !==  "" ? console.log("YES") : flagTrigger = flagTrigger + 1
+    Zipcode !==  "" ? console.log("YES") : flagTrigger = flagTrigger + 1
+    Email !==  "" ? console.log("YES") : flagTrigger = flagTrigger + 1
+    phoneNumber !==  "" ? console.log("YES"): flagTrigger = flagTrigger + 1
+
+    if (flagTrigger != 0) {
+      this.snackbarOpen(flagTrigger)
+    }
 
     //Check to see how many of the itmes are not filled. Then show the snackbars.
-    
+
 
     console.log("this is the stuff that was got from the user: ", Fname, Lname, Address, phoneNumber, City, Zipcode, Email)
    
@@ -334,7 +343,7 @@ class DashboardPage extends Component {
         open={this.state.snackbarOpen}
         autoHideDuration={6000}
         onClose={this.snackbarClose}
-        message="Note archived"
+        message={this.state.snackbarMessage}
        
       />
         
