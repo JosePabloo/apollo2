@@ -33,11 +33,21 @@ class DashboardPage extends Component {
     this.state = {
       open: false,
       setOpen: false,
-      value: ''
-      
+      Fname: "",
+      Lname: "",
+      Address: "",
+      phoneNumber: "",
+      City: "",
+      Zipcode: "",
+      Email: "",
     };
-    this.handleChange = this.handleChange.bind(this);
-    
+    this.handleFnameChange = this.handleFnameChange.bind(this);
+    this.handleLnameChange = this.handleLnameChange.bind(this);
+    this.handleChangeAddress = this.handleChangeAddress.bind(this);
+    this.handleChangeCity = this.handleChangeCity.bind(this);
+    this.handleChangeZipcode = this.handleChangeZipcode.bind(this);
+    this.handleChangePhoneNumber = this.handleChangePhoneNumber.bind(this);
+    this.handleChangeEmail = this.handleChangeEmail.bind(this);
   }
 
   handleClickOpen = () => {
@@ -51,6 +61,13 @@ class DashboardPage extends Component {
       setOpen: false,
       open: false,
     });
+    console.log(this.state.Fname)
+    console.log(this.state.Lname)
+    console.log(this.state.Address)
+    console.log(this.state.City)
+    console.log(this.state.Zipcode)
+    console.log(this.state.phoneNumber)
+    console.log(this.state.Email)
   };
 
   getClientData = () => {
@@ -86,18 +103,49 @@ class DashboardPage extends Component {
     // });
   };
 
-  handleChange(event) {
-    console.log(event.target.value)
-    //this.setState({value: event.target.value});
+  handleFnameChange(event) {
     this.setState({
-      value: event.target.value,
+      Fname: event.target.value,
     });
-    
   }
+  handleLnameChange(event) {
+    this.setState({
+      Lname: event.target.value,
+    });
+  }
+
+  handleChangeAddress(event) {
+    this.setState({
+      Address: event.target.value,
+    });
+  }
+  handleChangeCity(event) {
+    this.setState({
+      City: event.target.value,
+    });
+  }
+  handleChangeZipcode(event) {
+    this.setState({
+      Zipcode: event.target.value,
+    });
+  }
+  handleChangePhoneNumber(event) {
+    this.setState({
+      phoneNumber: event.target.value,
+    });
+  }
+  handleChangeEmail(event) {
+    this.setState({
+      Email: event.target.value,
+    });
+  }
+
+
+
 
   render() {
     let dateAndTime = moment().format("DD/MM/YYYY HH:mm:ss");
-    
+
     //const { user } = this.props;
     const classes = withStyles();
     console.log(dateAndTime);
@@ -140,9 +188,8 @@ class DashboardPage extends Component {
                   label="Frist Name"
                   type="name"
                   fullWidth
-                  value={this.state.value} 
-                  onChange={this.handleChange}
-                 
+                  value={this.state.Fname}
+                  onChange={this.handleFnameChange}
                 />
 
                 <TextField
@@ -151,6 +198,8 @@ class DashboardPage extends Component {
                   label="Last Name"
                   type="name"
                   fullWidth
+                  value={this.state.Lname}
+                  onChange={this.handleLnameChange}
                 />
 
                 <TextField
@@ -159,6 +208,8 @@ class DashboardPage extends Component {
                   label="Address"
                   type="name"
                   fullWidth
+                  value={this.state.Address}
+                  onChange={this.handleChangeAddress}
                 />
 
                 <TextField
@@ -167,6 +218,8 @@ class DashboardPage extends Component {
                   label="City"
                   type="name"
                   fullWidth
+                  value={this.state.City}
+                  onChange={this.handleChangeCity}
                 />
 
                 <TextField
@@ -175,6 +228,8 @@ class DashboardPage extends Component {
                   label="Zipcode"
                   type="name"
                   fullWidth
+                  value={this.state.Zipcode}
+                  onChange={this.handleChangeZipcode}
                 />
 
                 <TextField
@@ -183,6 +238,8 @@ class DashboardPage extends Component {
                   label="Phone"
                   type="name"
                   fullWidth
+                  value={this.state.phoneNumber}
+                  onChange={this.handleChangePhoneNumber}
                 />
 
                 <TextField
@@ -191,6 +248,8 @@ class DashboardPage extends Component {
                   label="Email"
                   type="name"
                   fullWidth
+                  value={this.state.Email}
+                  onChange={this.handleChangeEmail}
                 />
               </div>
             </form>
@@ -199,7 +258,8 @@ class DashboardPage extends Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            {/* TODO Need to create a sumbit function and another function that clears the state once its submited or cancled.  */}
+            <Button onClick={this.handleClose} color="primary"> 
               Subscribe
             </Button>
           </DialogActions>
