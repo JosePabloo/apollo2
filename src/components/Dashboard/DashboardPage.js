@@ -21,11 +21,17 @@ import DialogContent from "@material-ui/core/DialogContent";
 
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+import Snackbar from '@material-ui/core/Snackbar';
+
+
+
+
 const styles = (theme) => ({
   button: {
     margin: theme.spacing(1),
   },
 });
+
 
 class DashboardPage extends Component {
   constructor(props) {
@@ -33,13 +39,19 @@ class DashboardPage extends Component {
     this.state = {
       open: false,
       setOpen: false,
+
+      snackbarOpen: false,
+      snackbarSetOpen: false,
+      
       Fname: "",
       Lname: "",
       Address: "",
-      phoneNumber: "",
       City: "",
       Zipcode: "",
+      phoneNumber: "",
       Email: "",
+
+
     };
     this.handleFnameChange = this.handleFnameChange.bind(this);
     this.handleLnameChange = this.handleLnameChange.bind(this);
@@ -49,6 +61,7 @@ class DashboardPage extends Component {
     this.handleChangePhoneNumber = this.handleChangePhoneNumber.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
   }
+  
 
   handleClickOpen = () => {
     this.setState({
@@ -63,6 +76,20 @@ class DashboardPage extends Component {
       open: false,
     });
     this.handleClearDataFromNewClientForm()
+  };
+
+  snackbarOpen = () => {
+    this.setState({
+      snackbarOpen: true,
+      snackbarSetOpen: true,
+    });
+  };
+
+  snackbarClose = () => {
+    this.setState({
+      snackbarOpen: false,
+      snackbarSetOpen: false,
+    });
   };
 
   getClientData = () => {
@@ -147,22 +174,25 @@ class DashboardPage extends Component {
       City: "",
       Zipcode: "",
       Email: "",
+     
     });
     
   }
   
+  
   handleAddClientButtonHasBeenClicked = () => {
-    const { Fname, Lname, Address, City, Zipcode,Email,phoneNumber } = this.state;
+    const { Fname, Lname, Address, City, Zipcode,Email,phoneNumber, } = this.state;
     //Checking to see if the data is filled in. 
-    Fname !==  "" ? console.log("yes its filled. ") : console.log("No its not fulled")
-    Lname !==  "" ? console.log("yes its filled. ") : console.log("No its not fulled")
-    Address !==  "" ? console.log("yes its filled. ") : console.log("No its not fulled")
-    City !==  "" ? console.log("yes its filled. ") : console.log("No its not fulled")
-    Zipcode !==  "" ? console.log("yes its filled. ") : console.log("No its not fulled")
-    Email !==  "" ? console.log("yes its filled. ") : console.log("No its not fulled")
-    phoneNumber !==  "" ? console.log("yes its filled. ") : console.log("No its not fulled")
+    Fname !==  "" ? console.log("YES") :  this.snackbarOpen()
+    Lname !==  "" ? console.log("YES") : console.log("No its not fulled")
+    Address !==  "" ? console.log("YES") : console.log("No its not fulled")
+    City !==  "" ? console.log("YES") : console.log("No its not fulled")
+    Zipcode !==  "" ? console.log("YES") : console.log("No its not fulled")
+    Email !==  "" ? console.log("YES") : console.log("No its not fulled")
+    phoneNumber !==  "" ? console.log("YES"): console.log("No its not fulled")
 
     console.log("this is the stuff that was got from the user: ", Fname, Lname, Address, phoneNumber, City, Zipcode, Email)
+   
     //Check to see if nothing it null or undefined. 
     // if posted succeffully, then close. 
 
@@ -172,6 +202,7 @@ class DashboardPage extends Component {
 
   render() {
     let dateAndTime = moment().format("DD/MM/YYYY HH:mm:ss");
+    
 
     //const { user } = this.props;
     const classes = withStyles();
@@ -198,6 +229,7 @@ class DashboardPage extends Component {
       <div>
         {currentBalanceCard}
         <h1>test</h1>
+      
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -291,6 +323,18 @@ class DashboardPage extends Component {
             </Button>
           </DialogActions>
         </Dialog>
+        <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={this.state.snackbarOpen}
+        autoHideDuration={6000}
+        onClose={this.snackbarClose}
+        message="Note archived"
+       
+      />
+        
       </div>
     );
   }
