@@ -191,6 +191,9 @@ class DashboardPage extends Component {
     Email !==  "" ? console.log("YES") : console.log("No its not fulled")
     phoneNumber !==  "" ? console.log("YES"): console.log("No its not fulled")
 
+    //Check to see how many of the itmes are not filled. Then show the snackbars.
+    
+
     console.log("this is the stuff that was got from the user: ", Fname, Lname, Address, phoneNumber, City, Zipcode, Email)
    
     //Check to see if nothing it null or undefined. 
