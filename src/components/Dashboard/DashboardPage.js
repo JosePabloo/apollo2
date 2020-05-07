@@ -21,17 +21,13 @@ import DialogContent from "@material-ui/core/DialogContent";
 
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import Snackbar from '@material-ui/core/Snackbar';
-
-
-
+import Snackbar from "@material-ui/core/Snackbar";
 
 const styles = (theme) => ({
   button: {
     margin: theme.spacing(1),
   },
 });
-
 
 class DashboardPage extends Component {
   constructor(props) {
@@ -43,7 +39,7 @@ class DashboardPage extends Component {
       snackbarMessage: "",
       snackbarOpen: false,
       snackbarSetOpen: false,
-      
+
       Fname: "",
       Lname: "",
       Address: "",
@@ -51,8 +47,6 @@ class DashboardPage extends Component {
       Zipcode: "",
       phoneNumber: "",
       Email: "",
-
-
     };
     this.handleFnameChange = this.handleFnameChange.bind(this);
     this.handleLnameChange = this.handleLnameChange.bind(this);
@@ -62,7 +56,6 @@ class DashboardPage extends Component {
     this.handleChangePhoneNumber = this.handleChangePhoneNumber.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
   }
-  
 
   handleClickOpen = () => {
     this.setState({
@@ -76,33 +69,31 @@ class DashboardPage extends Component {
       setOpen: false,
       open: false,
     });
-    this.handleClearDataFromNewClientForm()
+    this.handleClearDataFromNewClientForm();
   };
 
-  snackbarOpen = (numbers,type) => {
+  snackbarOpen = (numbers, type) => {
     var message = "";
-    //Type is the type of message that youre setting. 
-    // 1 = Field need to be filed out. 
-    // 2 success! 
-    // 3 error. 
-    if(type === 1){
-      message = "There are " +numbers + " fields that need to be filled out." 
+    //Type is the type of message that youre setting.
+    // 1 = Field need to be filed out.
+    // 2 success!
+    // 3 error.
+    if (type === 1) {
+      message = "There are " + numbers + " fields that need to be filled out.";
     }
-    if(type === 2){
-      message = numbers
+    if (type === 2) {
+      message = numbers;
     }
-    if(type === 3){
-      message =  "Error adding document: " + numbers
+    if (type === 3) {
+      message = "Error adding document: " + numbers;
     }
 
-    
     this.setState({
-      snackbarMessage:message, 
+      snackbarMessage: message,
       snackbarOpen: true,
       snackbarSetOpen: true,
-      
     });
-    console.log(message)
+    console.log(message);
   };
 
   snackbarClose = () => {
@@ -125,13 +116,7 @@ class DashboardPage extends Component {
   };
 
   addClientClick = () => {
-
-    console.log("the button has been pressed adding clitn ");
     this.handleClickOpen();
-
-  
-   // this.handleClearDataFromNewClientForm()
-
   };
 
   handleFnameChange(event) {
@@ -171,7 +156,7 @@ class DashboardPage extends Component {
     });
   }
 
-  handleClearDataFromNewClientForm(){
+  handleClearDataFromNewClientForm() {
     this.setState({
       Fname: "",
       Lname: "",
@@ -180,59 +165,51 @@ class DashboardPage extends Component {
       City: "",
       Zipcode: "",
       Email: "",
-     
     });
-    
   }
-  
-  
+
   handleAddClientButtonHasBeenClicked = () => {
-    const { Fname, Lname, Address, City, Zipcode,Email,phoneNumber, } = this.state;
+    const {
+      Fname,
+      Lname,
+      Address,
+      City,
+      Zipcode,
+      Email,
+      phoneNumber,
+    } = this.state;
+    var db = firestore;
+    var flagTrigger = 0;
     //Checking to see if the data is filled in.
-    var db = firestore; 
-    var flagTrigger = 0; 
-    Fname !==  "" ? console.log("YES") :  flagTrigger = flagTrigger + 1
-    Lname !==  "" ? console.log("YES") : flagTrigger = flagTrigger + 1
-    Address !==  "" ? console.log("YES") : flagTrigger = flagTrigger + 1
-    City !==  "" ? console.log("YES") : flagTrigger = flagTrigger + 1
-    Zipcode !==  "" ? console.log("YES") : flagTrigger = flagTrigger + 1
-    Email !==  "" ? console.log("YES") : flagTrigger = flagTrigger + 1
-    phoneNumber !==  "" ? console.log("YES"): flagTrigger = flagTrigger + 1
+    Fname !== "" ? console.log("YES") : (flagTrigger = flagTrigger + 1);
+    Lname !== "" ? console.log("YES") : (flagTrigger = flagTrigger + 1);
+    Address !== "" ? console.log("YES") : (flagTrigger = flagTrigger + 1);
+    City !== "" ? console.log("YES") : (flagTrigger = flagTrigger + 1);
+    Zipcode !== "" ? console.log("YES") : (flagTrigger = flagTrigger + 1);
+    Email !== "" ? console.log("YES") : (flagTrigger = flagTrigger + 1);
+    phoneNumber !== "" ? console.log("YES") : (flagTrigger = flagTrigger + 1);
 
     if (flagTrigger != 0) {
-      this.snackbarOpen(flagTrigger, 1)
-    }else{
-        db.collection("clients").add({
-        FristName: Fname,
-        LastName: Lname,
-        //timestamp: dateAndTime,
-        BillingAddress: { Address: Address, City: City, Zipcode: Zipcode },
-        PhoneNumber: phoneNumber,
-        Email: Email
-
-    })
-    .catch(function(error) {
-      console.log("errirrrr!!!" , error)
-    });
-    this.handleClose()
-
+      this.snackbarOpen(flagTrigger, 1);
+    } else {
+      db.collection("clients")
+        .add({
+          FristName: Fname,
+          LastName: Lname,
+          //timestamp: dateAndTime,
+          BillingAddress: { Address: Address, City: City, Zipcode: Zipcode },
+          PhoneNumber: phoneNumber,
+          Email: Email,
+        })
+        .catch(function (error) {
+          console.log("errirrrr!!!", error);
+        });
+      this.handleClose();
     }
-
-    //Check to see how many of the itmes are not filled. Then show the snackbars.
-
-
-    console.log("this is the stuff that was got from the user: ", Fname, Lname, Address, phoneNumber, City, Zipcode, Email)
-   
-    //Check to see if nothing it null or undefined. 
-    // if posted succeffully, then close. 
-
-  }
-
-
+  };
 
   render() {
     let dateAndTime = moment().format("DD/MM/YYYY HH:mm:ss");
-    
 
     //const { user } = this.props;
     const classes = withStyles();
@@ -259,7 +236,7 @@ class DashboardPage extends Component {
       <div>
         {currentBalanceCard}
         <h1>test</h1>
-      
+
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -347,24 +324,24 @@ class DashboardPage extends Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            {/* TODO Need to create a sumbit function and another function that clears the state once its submited or cancled.  */}
-            <Button onClick={this.handleAddClientButtonHasBeenClicked} color="primary"> 
+            <Button
+              onClick={this.handleAddClientButtonHasBeenClicked}
+              color="primary"
+            >
               Sumbit
             </Button>
           </DialogActions>
         </Dialog>
         <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        open={this.state.snackbarOpen}
-        autoHideDuration={6000}
-        onClose={this.snackbarClose}
-        message={this.state.snackbarMessage}
-       
-      />
-        
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          open={this.state.snackbarOpen}
+          autoHideDuration={6000}
+          onClose={this.snackbarClose}
+          message={this.state.snackbarMessage}
+        />
       </div>
     );
   }
