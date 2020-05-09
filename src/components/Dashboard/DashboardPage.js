@@ -23,6 +23,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 import Snackbar from "@material-ui/core/Snackbar";
 
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 const styles = (theme) => ({
   button: {
     margin: theme.spacing(1),
@@ -50,6 +52,8 @@ class DashboardPage extends Component {
 
       clientsFromFire: [],
       isLoaded: false,
+      renderedList: [],
+      hasItBeenDoneLoading: "No",
     };
     this.handleFnameChange = this.handleFnameChange.bind(this);
     this.handleLnameChange = this.handleLnameChange.bind(this);
@@ -105,33 +109,32 @@ class DashboardPage extends Component {
       snackbarSetOpen: false,
     });
   };
-  
+
   testClientData = () => {
-    console.log(this.state.clientsFromFire)
-  }
+    const { clientsFromFire, isLoaded, renderedList } = this.state;
+    const clonelistItems = clientsFromFire.slice();
+    this.setState({
+      renderedList: clonelistItems,
+      isLoaded: true,
+    });
+  };
 
   getClientData = () => {
-    let {
-    clientsFromFire,
-    isLoaded
-    } = this.state;
+    let { clientsFromFire, isLoaded } = this.state;
     var db = firestore;
-    console.log("this is the loading state: ",isLoaded )
     db.collection("clients")
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-         clientsFromFire.push(doc)
+          clientsFromFire.push(doc);
         });
-      
-        isLoaded= true;
-        console.log("this is the loading state: ",isLoaded )
-      
-       
       });
-      this.testClientData()
-     
-      
+  };
+
+  setTheLoadingState = () => {
+    this.setState({
+      isLoaded: true,
+    });
   };
 
   addClientClick = () => {
@@ -233,6 +236,28 @@ class DashboardPage extends Component {
     //const { user } = this.props;
     const classes = withStyles();
     console.log(dateAndTime);
+    let { isLoaded } = this.state;
+
+    const renderAuthButton = () => {
+      if (isLoaded === true) {
+        return (
+          <div>
+            {this.state.clientsFromFire.map((client, index) => (
+              <div key={client.id}>
+                <p>Hello, {client.data().FristName} !</p>
+              </div>
+            ))}
+          </div>
+        );
+      }
+    };
+
+    const listOfPositions = this.state.clientsFromFire.map((client) => (
+      <div key={client.id}>
+        <h1>{client.data().LastName}</h1>
+        <h2> {client.data().FristName}</h2>
+      </div>
+    ));
 
     let currentBalanceCard = (
       <div>
@@ -250,11 +275,20 @@ class DashboardPage extends Component {
         </Button>
       </div>
     );
+    let loadingState = (
+      <div>
+        <CircularProgress />
+      </div>
+    );
+
+    const listItems = this.state.clientsFromFire.map((user) => (
+      <li key={user.id}>{user.data().FristName}</li>
+    ));
 
     return (
       <div>
         {currentBalanceCard}
-        <h1>test</h1>
+        {renderAuthButton()}
 
         <Dialog
           open={this.state.open}
@@ -365,8 +399,10 @@ class DashboardPage extends Component {
     );
   }
 
-  componentDidMount() {
-    this.getClientData();
+  async componentDidMount() {
+    await this.getClientData();
+    await this.setTheLoadingState();
+    //  await this.testClientData()
   }
 }
 
