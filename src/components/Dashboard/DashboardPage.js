@@ -47,6 +47,9 @@ class DashboardPage extends Component {
       Zipcode: "",
       phoneNumber: "",
       Email: "",
+
+      clientsFromFire: [],
+      isLoaded: false,
     };
     this.handleFnameChange = this.handleFnameChange.bind(this);
     this.handleLnameChange = this.handleLnameChange.bind(this);
@@ -102,17 +105,25 @@ class DashboardPage extends Component {
       snackbarSetOpen: false,
     });
   };
+  
+  testClientData = () => {
+    console.log(this.state.clientsFromFire)
+  }
 
   getClientData = () => {
+    let {
+    clientsFromFire
+    } = this.state;
     var db = firestore;
     db.collection("clients")
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
+         clientsFromFire.push(doc)
         });
       });
+
+      this.testClientData()
   };
 
   addClientClick = () => {
