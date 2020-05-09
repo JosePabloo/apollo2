@@ -112,18 +112,26 @@ class DashboardPage extends Component {
 
   getClientData = () => {
     let {
-    clientsFromFire
+    clientsFromFire,
+    isLoaded
     } = this.state;
     var db = firestore;
+    console.log("this is the loading state: ",isLoaded )
     db.collection("clients")
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
          clientsFromFire.push(doc)
         });
+      
+        isLoaded= true;
+        console.log("this is the loading state: ",isLoaded )
+      
+       
       });
-
       this.testClientData()
+     
+      
   };
 
   addClientClick = () => {
