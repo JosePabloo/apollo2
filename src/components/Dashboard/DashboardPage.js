@@ -25,6 +25,18 @@ import Snackbar from "@material-ui/core/Snackbar";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+import ClientList from "./ClientCard";
+
+import EmptyState from "../../components/EmptyState/EmptyState";
+
+import { ReactComponent as CabinIllustration } from "../../illustrations/cabin.svg";
+
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+
+import Typography from "@material-ui/core/Typography";
+
 const styles = (theme) => ({
   button: {
     margin: theme.spacing(1),
@@ -54,6 +66,12 @@ class DashboardPage extends Component {
       isLoaded: false,
       renderedList: [],
       hasItBeenDoneLoading: "No",
+
+
+      isReady: false,
+      data : [],
+
+      
     };
     this.handleFnameChange = this.handleFnameChange.bind(this);
     this.handleLnameChange = this.handleLnameChange.bind(this);
@@ -128,6 +146,7 @@ class DashboardPage extends Component {
         querySnapshot.forEach(function (doc) {
           clientsFromFire.push(doc);
         });
+        
       });
   };
 
@@ -135,6 +154,7 @@ class DashboardPage extends Component {
     this.setState({
       isLoaded: true,
     });
+    console.log("checking the data:", this.state.clientsFromFire);
   };
 
   addClientClick = () => {
@@ -189,6 +209,24 @@ class DashboardPage extends Component {
       Email: "",
     });
   }
+  onLoad = (e) => {
+    const docRef = firestore.collection('clients')
+
+    docRef.get().then((doc) => {
+        if (doc.exists) {
+            let data = doc.data();
+            this.setState({ data: data });
+            console.log("Document data:", data);
+        } else {
+            // doc.data() will be undefined in this case
+            this.setState({ data: null });
+            console.log("No such document!");
+        }
+    }).catch(function (error) {
+        this.setState({ data: null });
+        console.log("Error getting document:", error);
+    });
+}
 
   handleAddClientButtonHasBeenClicked = () => {
     const {
@@ -237,23 +275,10 @@ class DashboardPage extends Component {
     const classes = withStyles();
     console.log(dateAndTime);
     let { isLoaded } = this.state;
-
-    const renderAuthButton = () => {
-      if (isLoaded === true) {
-        return (
-          <div>
-            {this.state.clientsFromFire.map((client, index) => (
-              <div key={client.id}>
-                <p>Hello, {client.data().FristName} !</p>
-              </div>
-            ))}
-          </div>
-        );
-      }
-    };
+    var myArray = this.state.clientsFromFire;
 
     const listOfPositions = this.state.clientsFromFire.map((client) => (
-      <div key={client.id}>
+      <div key={client.id.toString()}>
         <h1>{client.data().LastName}</h1>
         <h2> {client.data().FristName}</h2>
       </div>
@@ -281,14 +306,35 @@ class DashboardPage extends Component {
       </div>
     );
 
+    let dataUI = this.state.data ? <h1>No Data</h1> : <pre>{JSON.stringify(this.state.data)}</pre>;
+
     const listItems = this.state.clientsFromFire.map((user) => (
       <li key={user.id}>{user.data().FristName}</li>
     ));
 
+    // if (!isLoaded) {
+    //   return (
+    //     <div>
+    //        <CircularProgress />
+          
+    //     </div>
+    //   );
+    // }
+
+  //  if(this.state.clientsFromFire.length >1 ) {
+  //    return {listItems}
+  //  }
+
+   
     return (
       <div>
-        {currentBalanceCard}
-        {renderAuthButton()}
+          {currentBalanceCard}
+          {/* {{dataUI}} */}
+
+          <Button variant="contained" onClick = {console.log("test")}>Default</Button>
+          
+          <ClientList somProp={myArray} />
+
 
         <Dialog
           open={this.state.open}
@@ -400,8 +446,9 @@ class DashboardPage extends Component {
   }
 
   async componentDidMount() {
-    await this.getClientData();
-    await this.setTheLoadingState();
+    // await this.getClientData();
+    // await this.setTheLoadingState();
+    // this.onLoad()
     //  await this.testClientData()
   }
 }
