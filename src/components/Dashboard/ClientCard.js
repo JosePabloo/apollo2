@@ -26,6 +26,11 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+import Container from '@material-ui/core/Container';
+
+import Grid from '@material-ui/core/Grid';
+
+
 const styles = (theme) => ({
   button: {
     margin: theme.spacing(1),
@@ -73,7 +78,6 @@ class ClientList extends Component {
   };
 
   testClientData = () => {
-    const { isLoaded } = this.state;
 
     this.setState({
       isLoaded: true,
@@ -93,29 +97,45 @@ class ClientList extends Component {
   };
 
   render() {
-    const { isLoaded, hasDataBeenLoaded } = this.state;
-
-    const { user } = this.props;
+    const { hasDataBeenLoaded } = this.state;
     const classes = withStyles();
 
-    let listItems = this.state.clientsFromFire.map((user) => (
-      <div key={user.id}>
-        <Card>
-          <CardContent>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              {user.data().FristName}
-            </Typography>
-            <Typography variant="h5" component="h2">
-              {user.data().LastName}
-            </Typography>
-          </CardContent>
-        </Card>
-      </div>
-    ));
+    let listItems =
+    <div>
+
+{this.state.clientsFromFire.map((user) => (
+     
+       
+     <Card key={user.id} >
+       <CardContent>
+         <Typography
+           className={classes.title}
+           color="textSecondary"
+           gutterBottom
+         >
+           {user.data().FristName}
+         </Typography>
+         <Typography variant="h5" component="h2">
+           {user.data().LastName}
+         </Typography>
+         <Typography variant="h5" component="h2">
+           Service Day: {user.data().ServiceDay}
+         </Typography>
+
+       </CardContent>
+     </Card>
+     
+     
+
+   
+ ))}
+
+ 
+    </div>
+     
+    
+    
+   
 
 
 
@@ -131,7 +151,14 @@ class ClientList extends Component {
 
     return (
       <div>
+        <Container maxWidth="sm">
+        
         {listItems}
+           
+
+       
+        </Container>
+      
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}

@@ -23,19 +23,11 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 import Snackbar from "@material-ui/core/Snackbar";
 
-import CircularProgress from "@material-ui/core/CircularProgress";
-
 import ClientList from "./ClientCard";
 
-import EmptyState from "../../components/EmptyState/EmptyState";
+import MaterialTableDemo from "./DataTable"
 
-import { ReactComponent as CabinIllustration } from "../../illustrations/cabin.svg";
-
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-
-import Typography from "@material-ui/core/Typography";
+import {TabletView, MobileView, isMobileOnly} from 'react-device-detect';
 
 const styles = (theme) => ({
   button: {
@@ -67,11 +59,8 @@ class DashboardPage extends Component {
       renderedList: [],
       hasItBeenDoneLoading: "No",
 
-
       isReady: false,
-      data : [],
-
-      
+      data: [],
     };
     this.handleFnameChange = this.handleFnameChange.bind(this);
     this.handleLnameChange = this.handleLnameChange.bind(this);
@@ -129,7 +118,7 @@ class DashboardPage extends Component {
   };
 
   testClientData = () => {
-    const { clientsFromFire, isLoaded, renderedList } = this.state;
+    const { clientsFromFire } = this.state;
     const clonelistItems = clientsFromFire.slice();
     this.setState({
       renderedList: clonelistItems,
@@ -138,7 +127,7 @@ class DashboardPage extends Component {
   };
 
   getClientData = () => {
-    let { clientsFromFire, isLoaded } = this.state;
+    let { clientsFromFire } = this.state;
     var db = firestore;
     db.collection("clients")
       .get()
@@ -146,7 +135,6 @@ class DashboardPage extends Component {
         querySnapshot.forEach(function (doc) {
           clientsFromFire.push(doc);
         });
-        
       });
   };
 
@@ -210,23 +198,26 @@ class DashboardPage extends Component {
     });
   }
   onLoad = (e) => {
-    const docRef = firestore.collection('clients')
+    const docRef = firestore.collection("clients");
 
-    docRef.get().then((doc) => {
+    docRef
+      .get()
+      .then((doc) => {
         if (doc.exists) {
-            let data = doc.data();
-            this.setState({ data: data });
-            console.log("Document data:", data);
+          let data = doc.data();
+          this.setState({ data: data });
+          console.log("Document data:", data);
         } else {
-            // doc.data() will be undefined in this case
-            this.setState({ data: null });
-            console.log("No such document!");
+          // doc.data() will be undefined in this case
+          this.setState({ data: null });
+          console.log("No such document!");
         }
-    }).catch(function (error) {
+      })
+      .catch(function (error) {
         this.setState({ data: null });
         console.log("Error getting document:", error);
-    });
-}
+      });
+  };
 
   handleAddClientButtonHasBeenClicked = () => {
     const {
@@ -249,7 +240,7 @@ class DashboardPage extends Component {
     Email !== "" ? console.log("YES") : (flagTrigger = flagTrigger + 1);
     phoneNumber !== "" ? console.log("YES") : (flagTrigger = flagTrigger + 1);
 
-    if (flagTrigger != 0) {
+    if (flagTrigger !== 0) {
       this.snackbarOpen(flagTrigger, 1);
     } else {
       db.collection("clients")
@@ -274,15 +265,6 @@ class DashboardPage extends Component {
     //const { user } = this.props;
     const classes = withStyles();
     console.log(dateAndTime);
-    let { isLoaded } = this.state;
-    var myArray = this.state.clientsFromFire;
-
-    const listOfPositions = this.state.clientsFromFire.map((client) => (
-      <div key={client.id.toString()}>
-        <h1>{client.data().LastName}</h1>
-        <h2> {client.data().FristName}</h2>
-      </div>
-    ));
 
     let currentBalanceCard = (
       <div>
@@ -300,41 +282,15 @@ class DashboardPage extends Component {
         </Button>
       </div>
     );
-    let loadingState = (
-      <div>
-        <CircularProgress />
-      </div>
-    );
 
-    let dataUI = this.state.data ? <h1>No Data</h1> : <pre>{JSON.stringify(this.state.data)}</pre>;
 
-    const listItems = this.state.clientsFromFire.map((user) => (
-      <li key={user.id}>{user.data().FristName}</li>
-    ));
-
-    // if (!isLoaded) {
-    //   return (
-    //     <div>
-    //        <CircularProgress />
-          
-    //     </div>
-    //   );
-    // }
-
-  //  if(this.state.clientsFromFire.length >1 ) {
-  //    return {listItems}
-  //  }
-
-   
     return (
       <div>
-          {currentBalanceCard}
-          {/* {{dataUI}} */}
-
-          <Button variant="contained" onClick = {console.log("test")}>Default</Button>
-          
-          <ClientList somProp={myArray} />
-
+        {currentBalanceCard}
+        {isMobileOnly ? <ClientList /> :  <MaterialTableDemo />} 
+        
+        
+       
 
         <Dialog
           open={this.state.open}
