@@ -287,7 +287,10 @@ class DashboardPage extends Component {
     return (
       <div>
         {currentBalanceCard}
-        {isMobileOnly ? <ClientList /> :  <MaterialTableDemo />} 
+        
+        {/* this is the code to check if its mobile or not.  */}
+        {/* {isMobileOnly ? <ClientList /> :  <MaterialTableDemo />}  */}
+        <ClientList/>
         
         
        

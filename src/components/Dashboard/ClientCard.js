@@ -10,10 +10,6 @@ import Button from "@material-ui/core/Button";
 
 import { withStyles } from "@material-ui/core/styles";
 
-import Card from "@material-ui/core/Card";
-
-import CardContent from "@material-ui/core/CardContent";
-
 import Typography from "@material-ui/core/Typography";
 
 import Dialog from "@material-ui/core/Dialog";
@@ -26,10 +22,24 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import Container from '@material-ui/core/Container';
+import Container from "@material-ui/core/Container";
 
-import Grid from '@material-ui/core/Grid';
+import Grid from "@material-ui/core/Grid";
 
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Collapse from "@material-ui/core/Collapse";
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+
+import { red } from "@material-ui/core/colors";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ShareIcon from "@material-ui/icons/Share";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 const styles = (theme) => ({
   button: {
@@ -48,6 +58,24 @@ const styles = (theme) => ({
   },
   pos: {
     marginBottom: 12,
+  },
+
+  media: {
+    height: 0,
+    paddingTop: "56.25%", // 16:9
+  },
+  expand: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: "rotate(180deg)",
+  },
+  avatar: {
+    backgroundColor: red[500],
   },
 });
 
@@ -78,7 +106,6 @@ class ClientList extends Component {
   };
 
   testClientData = () => {
-
     this.setState({
       isLoaded: true,
     });
@@ -100,44 +127,47 @@ class ClientList extends Component {
     const { hasDataBeenLoaded } = this.state;
     const classes = withStyles();
 
-    let listItems =
-    <div>
-
-{this.state.clientsFromFire.map((user) => (
-     
+    let listItems = (
+      <div>
+        {this.state.clientsFromFire.map((user) => (
        
-     <Card key={user.id} >
-       <CardContent>
-         <Typography
-           className={classes.title}
-           color="textSecondary"
-           gutterBottom
-         >
-           {user.data().FristName}
+
+          <Card className={classes.root} key={user.id}>
+            <CardHeader
+              action={
+                <IconButton aria-label="settings">
+                  <MoreVertIcon />
+                </IconButton>
+              }
+              title= {user.data().LastName + " " + user.data().FristName} 
+
+            />
+
+            <CardContent>
+              <Typography variant="body2" color="textSecondary" component="p">
+              {user.data().BillingAddress.Address + " " + user.data().BillingAddress.City +  " "+ user.data().BillingAddress.Zipcode}
          </Typography>
-         <Typography variant="h5" component="h2">
-           {user.data().LastName}
+         <Typography variant="body2" color="textSecondary" component="p">
+             {user.data().PhoneNumber}
          </Typography>
-         <Typography variant="h5" component="h2">
-           Service Day: {user.data().ServiceDay}
+         <Typography variant="body2" color="textSecondary" component="p">
+             {user.data().ServiceDay}
          </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+              <Button size="small" color="primary">
+                Contact
+          </Button>
+              <Button size="small" color="primary" style={{ textAlign: 'right' }}>
+                Complete Service
+            </Button>
 
-       </CardContent>
-     </Card>
-     
-     
-
-   
- ))}
-
- 
-    </div>
-     
-    
-    
-   
-
-
+            </CardActions>
+          </Card>
+        
+        ))}
+      </div>
+    );
 
     if (!hasDataBeenLoaded) {
       return (
@@ -151,14 +181,8 @@ class ClientList extends Component {
 
     return (
       <div>
-        <Container maxWidth="sm">
-        
-        {listItems}
-           
+        <Container maxWidth="sm">{listItems}</Container>
 
-       
-        </Container>
-      
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}

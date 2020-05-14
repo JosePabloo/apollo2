@@ -17,6 +17,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 
+// TODO: THIS IS A TABLE VIEW UNDER CONSTRUCTION!!!
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -56,7 +57,7 @@ export default function MaterialTableDemo() {
 
   return (
     <MaterialTable
-      title="Editable Example"
+      title="DEVELOPING"
       columns={state.columns}
       data={state.data}
       icons={tableIcons}
