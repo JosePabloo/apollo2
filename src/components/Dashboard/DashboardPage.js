@@ -27,7 +27,7 @@ import ClientList from "./ClientCard";
 
 import MaterialTableDemo from "./DataTable"
 
-import {TabletView, MobileView, isMobileOnly} from 'react-device-detect';
+import  isMobileOnly from 'react-device-detect';
 
 const styles = (theme) => ({
   button: {
