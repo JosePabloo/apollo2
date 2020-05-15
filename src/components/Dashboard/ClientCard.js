@@ -41,6 +41,9 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
+import Divider from "@material-ui/core/Divider";
+import Chip from "@material-ui/core/Chip";
+
 const styles = (theme) => ({
   button: {
     margin: theme.spacing(1),
@@ -77,6 +80,23 @@ const styles = (theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  root6: {
+    width: "100%",
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+  },
+  chip: {
+    margin: theme.spacing(0.5),
+  },
+  section1: {
+    margin: theme.spacing(3, 2),
+  },
+  section2: {
+    margin: theme.spacing(2),
+  },
+  section3: {
+    margin: theme.spacing(3, 1, 1),
+  },
 });
 
 class ClientList extends Component {
@@ -88,6 +108,8 @@ class ClientList extends Component {
       hasDataBeenLoaded: false,
       clientsFromFire: [],
     };
+
+    this.consoleTest = this.consoleTest.bind(this);
   }
 
   handleClickOpen = () => {
@@ -123,6 +145,10 @@ class ClientList extends Component {
       });
   };
 
+  consoleTest = (theInfo) => {
+    console.log("test: ",theInfo)
+  }
+
   render() {
     const { hasDataBeenLoaded } = this.state;
     const classes = withStyles();
@@ -130,8 +156,6 @@ class ClientList extends Component {
     let listItems = (
       <div>
         {this.state.clientsFromFire.map((user) => (
-       
-
           <Card className={classes.root} key={user.id}>
             <CardHeader
               action={
@@ -139,32 +163,41 @@ class ClientList extends Component {
                   <MoreVertIcon />
                 </IconButton>
               }
-              title= {user.data().LastName + " " + user.data().FristName} 
-
+              title={user.data().LastName + " " + user.data().FristName}
             />
 
             <CardContent>
               <Typography variant="body2" color="textSecondary" component="p">
-              {user.data().BillingAddress.Address + " " + user.data().BillingAddress.City +  " "+ user.data().BillingAddress.Zipcode}
-         </Typography>
-         <Typography variant="body2" color="textSecondary" component="p">
-             {user.data().PhoneNumber}
-         </Typography>
-         <Typography variant="body2" color="textSecondary" component="p">
-             {user.data().ServiceDay}
-         </Typography>
+                {user.data().BillingAddress.Address +
+                  " " +
+                  user.data().BillingAddress.City +
+                  " " +
+                  user.data().BillingAddress.Zipcode}
+              </Typography>
+              <Divider />
+
+              <Typography variant="body2" color="textSecondary" component="p">
+                {user.data().PhoneNumber}
+              </Typography>
+              <Divider />
+
+              <Typography variant="body2" color="textSecondary" component="p">
+                Service Day is on: {user.data().ServiceDay}
+              </Typography>
             </CardContent>
             <CardActions disableSpacing>
-              <Button size="small" color="primary">
+              <Button size="small" color="primary" onClick={ () => this.consoleTest(user.data())}>
                 Contact
-          </Button>
-              <Button size="small" color="primary" style={{ textAlign: 'right' }}>
+              </Button>
+              <Button
+                size="small"
+                color="primary"
+                style={{ textAlign: "right" }}
+              >
                 Complete Service
-            </Button>
-
+              </Button>
             </CardActions>
           </Card>
-        
         ))}
       </div>
     );
