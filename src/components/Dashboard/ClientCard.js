@@ -133,6 +133,8 @@ class ClientList extends Component {
     });
   };
 
+
+
   handleClickOpen = () => {
     this.setState({
       setOpen: true,
@@ -172,6 +174,7 @@ class ClientList extends Component {
       ClientInfoFromSelection: theInfo,
       isReadyToLoad: true
   })
+  this.handleClickModalClientOpen()
 }
 
   render() {
@@ -226,28 +229,6 @@ class ClientList extends Component {
         ))}
       </div>
     );
- //This is the dialog for confiming the user and set date: 
-
-    let clientClickedDialogSerivceConfirmed =( 
-      <Dialog
-      open={this.state.openClientWasClicked}
-      onClose={this.handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">{"Success"}</DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          {this.state.clientsFromFire.length} clients have been loaded.
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={this.handleClose} color="primary" autoFocus>
-          Continue
-        </Button>
-      </DialogActions>
-    </Dialog>
-    )
 
     if (!hasDataBeenLoaded) {
       return (
@@ -263,9 +244,25 @@ class ClientList extends Component {
       <div>
         <Container maxWidth="sm">
           {listItems}
-          {clientClickedDialogSerivceConfirmed}
           </Container>
-       
+          <Dialog
+      open={this.state.openClientWasClicked}
+      onClose={this.handleCloseClientModal}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{"Success"}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          {this.state.clientsFromFire.length} TESSSTT
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={this.handleCloseClientModal} color="primary" autoFocus>
+          Continue
+        </Button>
+      </DialogActions>
+    </Dialog>
 
         <Dialog
           open={this.state.open}
