@@ -44,12 +44,16 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Divider from "@material-ui/core/Divider";
 import Chip from "@material-ui/core/Chip";
 
+import ServiceConfrim from './ModalForService'
+
+
 const styles = (theme) => ({
   button: {
     margin: theme.spacing(1),
   },
   root: {
     minWidth: 275,
+    paddingTop: 10,
   },
   bullet: {
     display: "inline-block",
@@ -107,6 +111,7 @@ class ClientList extends Component {
       setOpen: false,
       hasDataBeenLoaded: false,
       clientsFromFire: [],
+      ClientInfoFromSelection: [],
     };
 
     this.consoleTest = this.consoleTest.bind(this);
@@ -147,7 +152,10 @@ class ClientList extends Component {
 
   consoleTest = (theInfo) => {
     console.log("test: ",theInfo)
-  }
+    this.setState({
+      ClientInfoFromSelection: theInfo
+  })
+}
 
   render() {
     const { hasDataBeenLoaded } = this.state;
@@ -199,6 +207,10 @@ class ClientList extends Component {
             </CardActions>
           </Card>
         ))}
+        <ServiceConfrim 
+        clientName = {this.state.ClientInfoFromSelection}
+        />
+        
       </div>
     );
 
