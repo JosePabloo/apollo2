@@ -107,15 +107,31 @@ class ClientList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      openClientWasClicked: false,
+      setClientModalOpen: false, 
       open: false,
       setOpen: false,
       hasDataBeenLoaded: false,
       clientsFromFire: [],
       ClientInfoFromSelection: [],
+      isReadyToLoad: false
     };
 
     this.consoleTest = this.consoleTest.bind(this);
   }
+  handleClickModalClientOpen = () => {
+    this.setState({
+      openClientWasClicked: true,
+      setClientModalOpen: true,
+    });
+  };
+
+  handleCloseClientModal = () => {
+    this.setState({
+      openClientWasClicked: false,
+      setClientModalOpen: false,
+    });
+  };
 
   handleClickOpen = () => {
     this.setState({
@@ -153,7 +169,8 @@ class ClientList extends Component {
   consoleTest = (theInfo) => {
     console.log("test: ",theInfo)
     this.setState({
-      ClientInfoFromSelection: theInfo
+      ClientInfoFromSelection: theInfo,
+      isReadyToLoad: true
   })
 }
 
@@ -207,12 +224,30 @@ class ClientList extends Component {
             </CardActions>
           </Card>
         ))}
-        <ServiceConfrim 
-        clientName = {this.state.ClientInfoFromSelection}
-        />
-        
       </div>
     );
+ //This is the dialog for confiming the user and set date: 
+
+    let clientClickedDialogSerivceConfirmed =( 
+      <Dialog
+      open={this.state.openClientWasClicked}
+      onClose={this.handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{"Success"}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          {this.state.clientsFromFire.length} clients have been loaded.
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={this.handleClose} color="primary" autoFocus>
+          Continue
+        </Button>
+      </DialogActions>
+    </Dialog>
+    )
 
     if (!hasDataBeenLoaded) {
       return (
@@ -226,7 +261,11 @@ class ClientList extends Component {
 
     return (
       <div>
-        <Container maxWidth="sm">{listItems}</Container>
+        <Container maxWidth="sm">
+          {listItems}
+          {clientClickedDialogSerivceConfirmed}
+          </Container>
+       
 
         <Dialog
           open={this.state.open}

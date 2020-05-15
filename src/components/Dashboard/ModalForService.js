@@ -4,11 +4,18 @@ import PropTypes from "prop-types";
 
 import { withRouter } from "react-router-dom";
 
-import Button from "@material-ui/core/Button";
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { withStyles } from "@material-ui/core/styles";
 
 import { red } from "@material-ui/core/colors";
+
+
 
 
 const styles = (theme) => ({
@@ -67,6 +74,7 @@ const styles = (theme) => ({
   },
 });
 
+
 class ServiceConfrim extends Component {
   constructor(props) {
     super(props);
@@ -78,7 +86,29 @@ class ServiceConfrim extends Component {
 
 
   }
+  showClickedClientData = () =>{
+      console.log("YAYAYAYA: ", this.props.clientName.LastName)
+  }
+  handleClickOpen() {
+    this.setState({
+      setOpen: true,
+      open: true,
+    });
+  };
 
+  handleClose = () => {
+    this.setState({
+      setOpen: false,
+      open: false,
+    });
+  
+  };
+
+  setTheDialogToOpen = () => {
+      if(this.props.loadIsTrue){
+        this.handleClickOpen()
+      }
+  }
  
 
 
@@ -89,16 +119,36 @@ class ServiceConfrim extends Component {
   
     return (
       <div>
-        <Button variant="contained" onClick = {console.log("CLIENT INFO: ",this.props.clientName)} >
-            HELLOWW
+      <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+        <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Let Google help apps determine location. This means sending anonymous location data to
+            Google, even when no apps are running.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={this.handleClose} color="primary">
+            Disagree
           </Button>
+          <Button onClick={this.handleClose} color="primary" autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
       </div>
     );
   }
 
   async componentDidMount() {
+      this.setTheDialogToOpen()
 
   }
+
 }
 
 ServiceConfrim.propTypes = {
