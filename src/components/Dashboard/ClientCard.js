@@ -44,12 +44,11 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Divider from "@material-ui/core/Divider";
 import Chip from "@material-ui/core/Chip";
 
-import ServiceConfrim from './ModalForService'
+import ServiceConfrim from "./ModalForService";
 
-import RadioGroup from '@material-ui/core/RadioGroup';
+import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from '@material-ui/core/Radio';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const styles = (theme) => ({
   button: {
@@ -108,12 +107,12 @@ const styles = (theme) => ({
 });
 
 const options = [
-  'Weekly Lawn Mowing',
-  'ByWeekly Lawn Mowing',
-  'Edging',
-  'Dethatch',
-  'Aerator',
-  'S/F Clean Up',
+  "Weekly Lawn Mowing",
+  "ByWeekly Lawn Mowing",
+  "Edging",
+  "Dethatch",
+  "Aerator",
+  "S/F Clean Up",
 ];
 
 class ClientList extends Component {
@@ -121,7 +120,7 @@ class ClientList extends Component {
     super(props);
     this.state = {
       openClientWasClicked: false,
-      setClientModalOpen: false, 
+      setClientModalOpen: false,
       open: false,
       setOpen: false,
       hasDataBeenLoaded: false,
@@ -129,7 +128,7 @@ class ClientList extends Component {
       ClientInfoFromSelection: [],
       isReadyToLoad: false,
       value: "",
-      setValue: false
+      setValue: false,
     };
 
     this.consoleTest = this.consoleTest.bind(this);
@@ -147,8 +146,6 @@ class ClientList extends Component {
       setClientModalOpen: false,
     });
   };
-
-
 
   handleClickOpen = () => {
     this.setState({
@@ -184,13 +181,21 @@ class ClientList extends Component {
   };
 
   consoleTest = (theInfo) => {
-    console.log("test: ",theInfo)
+    console.log("test: ", theInfo);
     this.setState({
       ClientInfoFromSelection: theInfo,
-      isReadyToLoad: true
-  })
-  this.handleClickModalClientOpen()
-}
+      isReadyToLoad: true,
+    });
+    this.handleClickModalClientOpen();
+  };
+
+  handleServiceChange = (event) => {
+    console.log(event.target.value);
+    this.setState({
+      value: event.target.value
+    
+    });
+  };
 
   render() {
     const { hasDataBeenLoaded } = this.state;
@@ -229,7 +234,11 @@ class ClientList extends Component {
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
-              <Button size="small" color="primary" onClick={ () => this.consoleTest(user.data())}>
+              <Button
+                size="small"
+                color="primary"
+                onClick={() => this.consoleTest(user.data())}
+              >
                 Contact
               </Button>
               <Button
@@ -257,42 +266,53 @@ class ClientList extends Component {
 
     return (
       <div>
-        <Container maxWidth="sm">
-          {listItems}
-          </Container>
-          <Dialog
-      open={this.state.openClientWasClicked}
-      onClose={this.handleCloseClientModal}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">{this.state.ClientInfoFromSelection.FristName + " " +this.state.ClientInfoFromSelection.LastName }</DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-        Service Date: {this.state.ClientInfoFromSelection.ServiceDay}
-        Price: $50
-        </DialogContentText>
-        <DialogContentText id="alert-dialog-description">
-        Price: $50
-        </DialogContentText>
-        <RadioGroup
-         // ref={radioGroupRef}
-          aria-label="ringtone"
-          name="ringtone"
-          value={this.state.value}
-         // onChange={handleChange}
+        <Container maxWidth="sm">{listItems}</Container>
+        <Dialog
+          open={this.state.openClientWasClicked}
+          onClose={this.handleCloseClientModal}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
         >
-          {options.map((option) => (
-            <FormControlLabel value={option} key={option} control={<Radio />} label={option} />
-          ))}
-        </RadioGroup>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={this.handleCloseClientModal} color="primary" autoFocus>
-          Continue
-        </Button>
-      </DialogActions>
-    </Dialog>
+          <DialogTitle id="alert-dialog-title">
+            {this.state.ClientInfoFromSelection.FristName +
+              " " +
+              this.state.ClientInfoFromSelection.LastName}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Service Date: {this.state.ClientInfoFromSelection.ServiceDay}
+              Price: $50
+            </DialogContentText>
+            <DialogContentText id="alert-dialog-description">
+              Price: $50
+            </DialogContentText>
+            <RadioGroup
+              // ref={radioGroupRef}
+              aria-label="ringtone"
+              name="ringtone"
+              value={this.state.value}
+              onChange={this.handleServiceChange}
+            >
+              {options.map((option) => (
+                <FormControlLabel
+                  value={option}
+                  key={option}
+                  control={<Radio />}
+                  label={option}
+                />
+              ))}
+            </RadioGroup>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={this.handleCloseClientModal}
+              color="primary"
+              autoFocus
+            >
+              Continue
+            </Button>
+          </DialogActions>
+        </Dialog>
 
         <Dialog
           open={this.state.open}
