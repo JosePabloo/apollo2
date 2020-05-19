@@ -126,6 +126,7 @@ class ClientList extends Component {
       hasDataBeenLoaded: false,
       clientsFromFire: [],
       ClientInfoFromSelection: [],
+      ClientInfoFromSelectionID: "",
       isReadyToLoad: false,
       value: "",
       setValue: false,
@@ -186,6 +187,8 @@ class ClientList extends Component {
     this.setState({
       ClientInfoFromSelection: theInfo.data(),
       isReadyToLoad: true,
+      ClientInfoFromSelectionID: theInfo.id
+      
     });
     
     this.handleClickModalClientOpen();
@@ -201,7 +204,7 @@ class ClientList extends Component {
 
   submitClientServiceDateToDataBase = () => {
     console.log("Inside the submitClientServiceDateToDataBase : ")
-    console.log(this.state.ClientInfoFromSelection.id)
+    console.log(this.state.ClientInfoFromSelectionID)
     this.handleCloseClientModal()
 
   }
