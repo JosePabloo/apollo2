@@ -46,6 +46,10 @@ import Chip from "@material-ui/core/Chip";
 
 import ServiceConfrim from './ModalForService'
 
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 
 const styles = (theme) => ({
   button: {
@@ -103,6 +107,15 @@ const styles = (theme) => ({
   },
 });
 
+const options = [
+  'Weekly Lawn Mowing',
+  'ByWeekly Lawn Mowing',
+  'Edging',
+  'Dethatch',
+  'Aerator',
+  'S/F Clean Up',
+];
+
 class ClientList extends Component {
   constructor(props) {
     super(props);
@@ -114,7 +127,9 @@ class ClientList extends Component {
       hasDataBeenLoaded: false,
       clientsFromFire: [],
       ClientInfoFromSelection: [],
-      isReadyToLoad: false
+      isReadyToLoad: false,
+      value: "",
+      setValue: false
     };
 
     this.consoleTest = this.consoleTest.bind(this);
@@ -254,8 +269,23 @@ class ClientList extends Component {
       <DialogTitle id="alert-dialog-title">{this.state.ClientInfoFromSelection.FristName + " " +this.state.ClientInfoFromSelection.LastName }</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          {this.state.clientsFromFire.length} TESSSTT
+        Service Date: {this.state.ClientInfoFromSelection.ServiceDay}
+        Price: $50
         </DialogContentText>
+        <DialogContentText id="alert-dialog-description">
+        Price: $50
+        </DialogContentText>
+        <RadioGroup
+         // ref={radioGroupRef}
+          aria-label="ringtone"
+          name="ringtone"
+          value={this.state.value}
+         // onChange={handleChange}
+        >
+          {options.map((option) => (
+            <FormControlLabel value={option} key={option} control={<Radio />} label={option} />
+          ))}
+        </RadioGroup>
       </DialogContent>
       <DialogActions>
         <Button onClick={this.handleCloseClientModal} color="primary" autoFocus>
