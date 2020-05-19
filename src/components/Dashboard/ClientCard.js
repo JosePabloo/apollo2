@@ -134,7 +134,8 @@ class ClientList extends Component {
       isReadyToLoad: false,
       value: "",
       setValue: false,
-      ClientPrice: '99'
+      ClientPrice: '46',
+      ClientPriceChangedFlag: false
     };
 
     this.consoleTest = this.consoleTest.bind(this);
@@ -150,6 +151,7 @@ class ClientList extends Component {
     this.setState({
       openClientWasClicked: false,
       setClientModalOpen: false,
+      ClientPriceChangedFlag: false,
     });
   };
 
@@ -207,7 +209,8 @@ class ClientList extends Component {
   clientPriceChange = (event) => {
     console.log(event.target.value);
     this.setState({
-      clientPriceChange: event.target.value,
+      ClientPrice: event.target.value,
+      ClientPriceChangedFlag: true
     });
   }
 
@@ -216,6 +219,11 @@ class ClientList extends Component {
     console.log(this.state.ClientInfoFromSelectionID);
     console.log(this.state.ClientInfoFromSelection);
     console.log(this.state.ClientPrice)
+    console.log(this.state.ClientInfoFromSelection.ServicePrice)
+    console.log(this.state.ClientPriceChangedFlag)
+    if (this.state.ClientPriceChangedFlag){
+      console.log("The client price does not equal the same as the database ")
+    }
     this.handleCloseClientModal();
   };
   //TODO: ADD CLIENT ID to id
