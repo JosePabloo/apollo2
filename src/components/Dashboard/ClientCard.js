@@ -48,6 +48,9 @@ import TextField from "@material-ui/core/TextField";
 
 import moment from "moment";
 
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
+
 const styles = (theme) => ({
   button: {
     margin: theme.spacing(1),
@@ -402,6 +405,33 @@ class ClientList extends Component {
             </Button>
           </DialogActions>
         </Dialog>
+
+        <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Note archived"
+        action={
+          <React.Fragment>
+            <Button color="secondary" size="small" onClick={handleClose}>
+              UNDO
+            </Button>
+            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      />
+
+
+
+
+
+
       </div>
     );
   }
