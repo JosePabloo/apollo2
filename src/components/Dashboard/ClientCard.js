@@ -132,7 +132,7 @@ class ClientList extends Component {
       ClientInfoFromSelection: [],
       ClientInfoFromSelectionID: "",
       isReadyToLoad: false,
-      value: "",
+      value: "Weekly Lawn Mowing",
       setValue: false,
       ClientPrice: '46',
       ClientPriceChangedFlag: false
@@ -216,11 +216,9 @@ class ClientList extends Component {
 
   submitClientServiceDateToDataBase = () => {
     console.log("Inside the submitClientServiceDateToDataBase : ");
-    console.log(this.state.ClientInfoFromSelectionID);
-    console.log(this.state.ClientInfoFromSelection);
-    console.log(this.state.ClientPrice)
-    console.log(this.state.ClientInfoFromSelection.ServicePrice)
-    console.log(this.state.ClientPriceChangedFlag)
+
+    console.log(this.state.value)
+   
     if (this.state.ClientPriceChangedFlag){
       console.log("The client price does not equal the same as the database ")
     }
