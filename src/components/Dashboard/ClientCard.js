@@ -47,8 +47,10 @@ import Chip from "@material-ui/core/Chip";
 import ServiceConfrim from "./ModalForService";
 
 import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from '@material-ui/core/Radio';
+import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+
+import TextField from "@material-ui/core/TextField";
 
 import moment from "moment";
 
@@ -132,6 +134,7 @@ class ClientList extends Component {
       isReadyToLoad: false,
       value: "",
       setValue: false,
+      ClientPrice: '99'
     };
 
     this.consoleTest = this.consoleTest.bind(this);
@@ -185,32 +188,36 @@ class ClientList extends Component {
 
   consoleTest = (theInfo) => {
     console.log("data(): ", theInfo.data());
-    console.log("ID: ", theInfo.id)
+    console.log("ID: ", theInfo.id);
     this.setState({
       ClientInfoFromSelection: theInfo.data(),
       isReadyToLoad: true,
-      ClientInfoFromSelectionID: theInfo.id
-      
+      ClientInfoFromSelectionID: theInfo.id,
     });
-    
+
     this.handleClickModalClientOpen();
   };
 
   handleServiceChange = (event) => {
     console.log(event.target.value);
     this.setState({
-      value: event.target.value
-    
+      value: event.target.value,
     });
   };
+  clientPriceChange = (event) => {
+    console.log(event.target.value);
+    this.setState({
+      clientPriceChange: event.target.value,
+    });
+  }
 
   submitClientServiceDateToDataBase = () => {
-    console.log("Inside the submitClientServiceDateToDataBase : ")
-    console.log(this.state.ClientInfoFromSelectionID)
-    console.log(this.state.ClientInfoFromSelection)
-    this.handleCloseClientModal()
-
-  }
+    console.log("Inside the submitClientServiceDateToDataBase : ");
+    console.log(this.state.ClientInfoFromSelectionID);
+    console.log(this.state.ClientInfoFromSelection);
+    console.log(this.state.ClientPrice)
+    this.handleCloseClientModal();
+  };
   //TODO: ADD CLIENT ID to id
 
   render() {
@@ -299,9 +306,20 @@ class ClientList extends Component {
             <DialogContentText id="alert-dialog-description">
               Service Date: {dateAndTime}
             </DialogContentText>
-            <DialogContentText id="alert-dialog-description">
-              Price: $50
-            </DialogContentText>
+
+            <TextField
+              required
+              id="standard-required"
+              label="ClientServicePrice"
+             // value={this.state.ClientPrice}
+              onChange={this.clientPriceChange}
+              defaultValue={
+                this.state.ClientInfoFromSelection.ServicePrice
+                  ? this.state.ClientInfoFromSelection.ServicePrice
+                  : this.state.ClientPrice
+              }
+            />
+
             <RadioGroup
               // ref={radioGroupRef}
               aria-label="ringtone"
@@ -326,6 +344,13 @@ class ClientList extends Component {
               autoFocus
             >
               Continue
+            </Button>
+            <Button
+             // onClick={console.log(standard - required)}
+              color="primary"
+              autoFocus
+            >
+              Testing Buttom
             </Button>
           </DialogActions>
         </Dialog>
