@@ -129,7 +129,8 @@ class ClientList extends Component {
       value: "Weekly Lawn Mowing",
       setValue: false,
       ClientPrice: 'ADD A PRICE',
-      ClientPriceChangedFlag: false
+      ClientPriceChangedFlag: false,
+      CurrentDate:  moment().format("MM/DD/YY")
     };
 
     this.consoleTest = this.consoleTest.bind(this);
@@ -210,18 +211,20 @@ class ClientList extends Component {
 
   submitClientServiceDateToDataBase = () => {
     var db = firestore;
-    console.log("Inside the submitClientServiceDateToDataBase : ");
-
-    console.log(this.state.value)
+    console.log(this.state.ClientInfoFromSelection)
     if (this.state.ClientPriceChangedFlag){
       console.log("The client price does not equal the same as the database ")
     }else{
       console.log("the Client Has not changed the Price!")
     }
     db.collection("serviceRecords").add({
-      name: "Tokyo",
-      country: "Japan"
-      
+      Client: this.state.ClientInfoFromSelectionID,
+      ClientFirstName:  this.state.ClientInfoFromSelection.FristName, 
+      ClientLastName: this.state.ClientInfoFromSelection.LastName,
+      ServiceDate: this.state.CurrentDate, 
+      ServicePrice: this.state.ClientPrice,
+      ServiceType: this.state.value,
+      paid: false,      
   })
   .then(function(docRef) {
       console.log("Document written with ID: ", docRef.id);
@@ -240,7 +243,7 @@ class ClientList extends Component {
   render() {
     const { hasDataBeenLoaded } = this.state;
     const classes = withStyles();
-    let dateAndTime = moment().format("MM/DD/YY");
+    
 
     let listItems = (
       <div>
@@ -326,7 +329,7 @@ class ClientList extends Component {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Service Date: {dateAndTime}
+              Service Date: {this.state.CurrentDate}
             </DialogContentText>
 
             <TextField
