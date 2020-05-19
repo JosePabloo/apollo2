@@ -50,6 +50,8 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
+import moment from "moment";
+
 const styles = (theme) => ({
   button: {
     margin: theme.spacing(1),
@@ -205,6 +207,7 @@ class ClientList extends Component {
   submitClientServiceDateToDataBase = () => {
     console.log("Inside the submitClientServiceDateToDataBase : ")
     console.log(this.state.ClientInfoFromSelectionID)
+    console.log(this.state.ClientInfoFromSelection)
     this.handleCloseClientModal()
 
   }
@@ -213,6 +216,7 @@ class ClientList extends Component {
   render() {
     const { hasDataBeenLoaded } = this.state;
     const classes = withStyles();
+    let dateAndTime = moment().format("MM/DD/YY");
 
     let listItems = (
       <div>
@@ -293,8 +297,7 @@ class ClientList extends Component {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Service Date: {this.state.ClientInfoFromSelection.ServiceDay}
-              Price: $50
+              Service Date: {dateAndTime}
             </DialogContentText>
             <DialogContentText id="alert-dialog-description">
               Price: $50
