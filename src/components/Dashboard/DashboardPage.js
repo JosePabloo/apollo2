@@ -25,9 +25,9 @@ import Snackbar from "@material-ui/core/Snackbar";
 
 import ClientList from "./ClientCard";
 
-import MaterialTableDemo from "./DataTable"
+// import MaterialTableDemo from "./DataTable"
 
-import  isMobileOnly from 'react-device-detect';
+// import  isMobileOnly from 'react-device-detect';
 
 const styles = (theme) => ({
   button: {
