@@ -25,13 +25,30 @@ import Snackbar from "@material-ui/core/Snackbar";
 
 import ClientList from "./ClientCard";
 
+import Fab from '@material-ui/core/Fab';
+
 // import MaterialTableDemo from "./DataTable"
 
 // import  isMobileOnly from 'react-device-detect';
 
+
 const styles = (theme) => ({
   button: {
     margin: theme.spacing(1),
+  },
+  root: {
+      margin: 0,
+      top: 'auto',
+      right: 20,
+      bottom: 20,
+      left: 'auto',
+      position: 'fixed'
+
+  },
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
   },
 });
 
@@ -285,8 +302,10 @@ class DashboardPage extends Component {
 
 
     return (
+      <React.Fragment> 
       <div>
         {currentBalanceCard}
+
         
         {/* this is the code to check if its mobile or not.  */}
         {/* {isMobileOnly ? <ClientList /> :  <MaterialTableDemo />}  */}
@@ -400,7 +419,20 @@ class DashboardPage extends Component {
           onClose={this.snackbarClose}
           message={this.state.snackbarMessage}
         />
+
+        <Fab color="primary" aria-label="add" className={classes.fab}>
+        <AddIcon />
+      </Fab>
+
+
       </div>
+    
+
+
+
+
+
+      </React.Fragment>
     );
   }
 
