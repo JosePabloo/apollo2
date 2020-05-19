@@ -128,7 +128,7 @@ class ClientList extends Component {
       isReadyToLoad: false,
       value: "Weekly Lawn Mowing",
       setValue: false,
-      ClientPrice: '46',
+      ClientPrice: 'ADD A PRICE',
       ClientPriceChangedFlag: false
     };
 
@@ -209,13 +209,30 @@ class ClientList extends Component {
   }
 
   submitClientServiceDateToDataBase = () => {
+    var db = firestore;
     console.log("Inside the submitClientServiceDateToDataBase : ");
 
     console.log(this.state.value)
-   
     if (this.state.ClientPriceChangedFlag){
       console.log("The client price does not equal the same as the database ")
+    }else{
+      console.log("the Client Has not changed the Price!")
     }
+    db.collection("serviceRecords").add({
+      name: "Tokyo",
+      country: "Japan"
+      
+  })
+  .then(function(docRef) {
+      console.log("Document written with ID: ", docRef.id);
+  })
+  .catch(function(error) {
+      console.error("Error adding document: ", error);
+  });
+  
+  
+   
+   
     this.handleCloseClientModal();
   };
   //TODO: ADD CLIENT ID to id
@@ -262,6 +279,8 @@ class ClientList extends Component {
                 size="small"
                 color="primary"
                 style={{ textAlign: "right" }}
+                variant="contained"
+                autoFocus
               >
                 Contact
               </Button>
@@ -269,6 +288,8 @@ class ClientList extends Component {
                 size="small"
                 color="primary"
                 onClick={() => this.consoleTest(user)}
+                variant="contained"
+                autoFocus
               >
                 Service Completed
               </Button>
@@ -311,8 +332,7 @@ class ClientList extends Component {
             <TextField
               required
               id="standard-required"
-              label="ClientServicePrice"
-             // value={this.state.ClientPrice}
+              label="Service Cost"
               onChange={this.clientPriceChange}
               defaultValue={
                 this.state.ClientInfoFromSelection.ServicePrice
@@ -344,6 +364,8 @@ class ClientList extends Component {
              onClick={this.handleCloseClientModal}
               color="primary"
               autoFocus
+              variant="contained"
+              
             >
               Cancel
             </Button>
@@ -352,6 +374,7 @@ class ClientList extends Component {
               onClick={this.submitClientServiceDateToDataBase}
               color="primary"
               autoFocus
+              variant="contained"
             >
               Continue
             </Button>
