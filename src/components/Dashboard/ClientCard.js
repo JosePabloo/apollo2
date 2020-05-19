@@ -181,11 +181,13 @@ class ClientList extends Component {
   };
 
   consoleTest = (theInfo) => {
-    console.log("test: ", theInfo);
+    console.log("data(): ", theInfo.data());
+    console.log("ID: ", theInfo.id)
     this.setState({
-      ClientInfoFromSelection: theInfo,
+      ClientInfoFromSelection: theInfo.data(),
       isReadyToLoad: true,
     });
+    
     this.handleClickModalClientOpen();
   };
 
@@ -196,6 +198,14 @@ class ClientList extends Component {
     
     });
   };
+
+  submitClientServiceDateToDataBase = () => {
+    console.log("Inside the submitClientServiceDateToDataBase : ")
+    console.log(this.state.ClientInfoFromSelection.id)
+    this.handleCloseClientModal()
+
+  }
+  //TODO: ADD CLIENT ID to id
 
   render() {
     const { hasDataBeenLoaded } = this.state;
@@ -237,7 +247,7 @@ class ClientList extends Component {
               <Button
                 size="small"
                 color="primary"
-                onClick={() => this.consoleTest(user.data())}
+                onClick={() => this.consoleTest(user)}
               >
                 Contact
               </Button>
@@ -305,7 +315,7 @@ class ClientList extends Component {
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={this.handleCloseClientModal}
+              onClick={this.submitClientServiceDateToDataBase}
               color="primary"
               autoFocus
             >
