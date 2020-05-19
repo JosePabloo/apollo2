@@ -133,7 +133,10 @@ class ClientList extends Component {
       setValue: false,
       ClientPrice: 'ADD A PRICE',
       ClientPriceChangedFlag: false,
-      CurrentDate:  moment().format("MM/DD/YY")
+      CurrentDate:  moment().format("MM/DD/YY"),
+      snackbarOpen: false,
+      setSnackBarOpen: false, 
+
     };
 
     this.consoleTest = this.consoleTest.bind(this);
@@ -229,19 +232,32 @@ class ClientList extends Component {
       ServiceType: this.state.value,
       paid: false,      
   })
-  .then(function(docRef) {
-      console.log("Document written with ID: ", docRef.id);
-  })
   .catch(function(error) {
       console.error("Error adding document: ", error);
   });
-  
-  
-   
-   
     this.handleCloseClientModal();
+    this.openSnackBarSuccess();
   };
   //TODO: ADD CLIENT ID to id
+
+  openSnackBarSuccess = () => {
+    console.log("snackback Success")
+    this.setState({
+      snackbarOpen: true,
+      setSnackBarOpen: true, 
+    });
+
+  }
+
+  closeSnackBackSuccess = (event, reason) => {
+    this.setState({
+      snackbarOpen: false,
+      setSnackBarOpen: false, 
+    });
+  };
+
+
+  
 
   render() {
     const { hasDataBeenLoaded } = this.state;
@@ -389,7 +405,7 @@ class ClientList extends Component {
 
         <Dialog
           open={this.state.open}
-          onClose={this.handleClose}
+          onClose={this.closeSnackBackSuccess}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -411,16 +427,16 @@ class ClientList extends Component {
           vertical: 'bottom',
           horizontal: 'left',
         }}
-        open={open}
+        open={this.state.snackbarOpen}
         autoHideDuration={6000}
-        onClose={handleClose}
-        message="Note archived"
+        onClose={this.closeSnackBackSuccess}
+        message="Service Date Added"
         action={
           <React.Fragment>
-            <Button color="secondary" size="small" onClick={handleClose}>
-              UNDO
+            <Button color="secondary" size="small" onClick={this.closeSnackBackSuccess}>
+              Continue
             </Button>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+            <IconButton size="small" aria-label="close" color="inherit" onClick={this.closeSnackBackSuccess}>
               <CloseIcon fontSize="small" />
             </IconButton>
           </React.Fragment>
