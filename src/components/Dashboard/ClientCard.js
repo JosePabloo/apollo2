@@ -266,20 +266,21 @@ class ClientList extends Component {
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
-              <Button
+            <Button
                 size="small"
                 color="primary"
-                onClick={() => this.consoleTest(user)}
+                style={{ textAlign: "right" }}
               >
                 Contact
               </Button>
               <Button
                 size="small"
                 color="primary"
-                style={{ textAlign: "right" }}
+                onClick={() => this.consoleTest(user)}
               >
-                Complete Service
+                Service Completed
               </Button>
+              
             </CardActions>
           </Card>
         ))}
@@ -346,19 +347,21 @@ class ClientList extends Component {
             </RadioGroup>
           </DialogContent>
           <DialogActions>
+          
+            <Button
+             onClick={this.handleCloseClientModal}
+              color="primary"
+              autoFocus
+            >
+              Cancel
+            </Button>
+
             <Button
               onClick={this.submitClientServiceDateToDataBase}
               color="primary"
               autoFocus
             >
               Continue
-            </Button>
-            <Button
-             // onClick={console.log(standard - required)}
-              color="primary"
-              autoFocus
-            >
-              Testing Buttom
             </Button>
           </DialogActions>
         </Dialog>
