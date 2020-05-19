@@ -428,7 +428,7 @@ class ClientList extends Component {
           horizontal: 'left',
         }}
         open={this.state.snackbarOpen}
-        autoHideDuration={6000}
+        autoHideDuration={4000}
         onClose={this.closeSnackBackSuccess}
         message="Service Date Added"
         action={
