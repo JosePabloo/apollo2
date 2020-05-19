@@ -46,9 +46,18 @@ const styles = (theme) => ({
 
   },
   fab: {
-    position: 'fixed',
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
+    backgroundColor: theme.palette.background.paper,
+    width: 500,
+    position: 'relative',
+    minHeight: 200,
+  },
+  fabButton: {
+    position: 'absolute',
+    zIndex: 1,
+    top: -30,
+    left: 0,
+    right: 0,
+    margin: '0 auto',
   },
 });
 
@@ -302,18 +311,13 @@ class DashboardPage extends Component {
 
 
     return (
-      <React.Fragment> 
-      <div>
+      <div className = {classes.root}>
         {currentBalanceCard}
 
         
         {/* this is the code to check if its mobile or not.  */}
         {/* {isMobileOnly ? <ClientList /> :  <MaterialTableDemo />}  */}
         <ClientList/>
-        
-        
-       
-
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -420,19 +424,13 @@ class DashboardPage extends Component {
           message={this.state.snackbarMessage}
         />
 
-        <Fab color="primary" aria-label="add" className={classes.fab}>
+        <Fab color="primary" aria-label="add" style={{ bottom: 30,  position: "fixed", right:25 }}>
         <AddIcon />
       </Fab>
 
 
       </div>
-    
 
-
-
-
-
-      </React.Fragment>
     );
   }
 
