@@ -25,39 +25,37 @@ import Snackbar from "@material-ui/core/Snackbar";
 
 import ClientList from "./ClientCard";
 
-import Fab from '@material-ui/core/Fab';
+import Fab from "@material-ui/core/Fab";
 
 // import MaterialTableDemo from "./DataTable"
 
 // import  isMobileOnly from 'react-device-detect';
-
 
 const styles = (theme) => ({
   button: {
     margin: theme.spacing(1),
   },
   root: {
-      margin: 0,
-      top: 'auto',
-      right: 20,
-      bottom: 20,
-      left: 'auto',
-      position: 'fixed'
-
+    margin: 0,
+    top: "auto",
+    right: 20,
+    bottom: 20,
+    left: "auto",
+    position: "fixed",
   },
   fab: {
     backgroundColor: theme.palette.background.paper,
     width: 500,
-    position: 'relative',
+    position: "relative",
     minHeight: 200,
   },
   fabButton: {
-    position: 'absolute',
+    position: "absolute",
     zIndex: 1,
     top: -30,
     left: 0,
     right: 0,
-    margin: '0 auto',
+    margin: "0 auto",
   },
 });
 
@@ -309,15 +307,13 @@ class DashboardPage extends Component {
       </div>
     );
 
-
     return (
-      <div className = {classes.root}>
+      <div className={classes.root}>
         {currentBalanceCard}
 
-        
         {/* this is the code to check if its mobile or not.  */}
         {/* {isMobileOnly ? <ClientList /> :  <MaterialTableDemo />}  */}
-        <ClientList/>
+        <ClientList />
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -424,13 +420,15 @@ class DashboardPage extends Component {
           message={this.state.snackbarMessage}
         />
 
-        <Fab color="primary" aria-label="add" style={{ bottom: 30,  position: "fixed", right:25 }}>
-        <AddIcon />
-      </Fab>
-
-
+        <Fab
+          color="primary"
+          aria-label="add"
+          style={{ bottom: 30, position: "fixed", right: 25 }}
+          onClick={this.addClientClick}
+        >
+          <AddIcon />
+        </Fab>
       </div>
-
     );
   }
 
