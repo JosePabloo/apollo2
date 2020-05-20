@@ -27,6 +27,12 @@ import ClientList from "./ClientCard";
 
 import Fab from "@material-ui/core/Fab";
 
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 // import MaterialTableDemo from "./DataTable"
 
 // import  isMobileOnly from 'react-device-detect';
@@ -57,6 +63,7 @@ const styles = (theme) => ({
     right: 0,
     margin: "0 auto",
   },
+
 });
 
 class DashboardPage extends Component {
@@ -394,6 +401,19 @@ class DashboardPage extends Component {
                   value={this.state.Email}
                   onChange={this.handleChangeEmail}
                 />
+                <FormControl className={classes.formControl}  style={{ minWidth: 260}}>
+        <InputLabel id="demo-simple-select-label">Service Date</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          // value={age}
+          // onChange={handleChange}
+        >
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
+        </Select>
+      </FormControl>
               </div>
             </form>
           </DialogContent>
