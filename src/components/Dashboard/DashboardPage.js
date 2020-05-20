@@ -93,7 +93,7 @@ class DashboardPage extends Component {
       isReady: false,
       data: [],
 
-      serviceDay: "", 
+      serviceDay2: "", 
       setServiceDay: "", 
     };
     this.handleFnameChange = this.handleFnameChange.bind(this);
@@ -222,9 +222,8 @@ class DashboardPage extends Component {
 
   handleChangeServiceDate = (event) => {
     this.setState({
-      serviceDay: event.target.value,
-    });
-   
+      serviceDay2: event.target.value,
+    });   
   };
 
   handleClearDataFromNewClientForm() {
@@ -269,6 +268,7 @@ class DashboardPage extends Component {
       Zipcode,
       Email,
       phoneNumber,
+      serviceDay2
     } = this.state;
     var db = firestore;
     var flagTrigger = 0;
@@ -280,6 +280,7 @@ class DashboardPage extends Component {
     Zipcode !== "" ? console.log("YES") : (flagTrigger = flagTrigger + 1);
     Email !== "" ? console.log("YES") : (flagTrigger = flagTrigger + 1);
     phoneNumber !== "" ? console.log("YES") : (flagTrigger = flagTrigger + 1);
+    serviceDay2 !== "" ? console.log("YES") : (flagTrigger = flagTrigger + 1);
 
     if (flagTrigger !== 0) {
       this.snackbarOpen(flagTrigger, 1);
@@ -292,6 +293,7 @@ class DashboardPage extends Component {
           BillingAddress: { Address: Address, City: City, Zipcode: Zipcode },
           PhoneNumber: phoneNumber,
           Email: Email,
+          ServiceDay: serviceDay2
         })
         .catch(function (error) {
           console.log("errirrrr!!!", error);
@@ -416,7 +418,7 @@ class DashboardPage extends Component {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={this.state.serviceDay}
+          value={this.state.serviceDay2}
           onChange={this.handleChangeServiceDate}
         >
           <MenuItem value={"Monday"}>Monday</MenuItem>
