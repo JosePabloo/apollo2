@@ -92,6 +92,9 @@ class DashboardPage extends Component {
 
       isReady: false,
       data: [],
+
+      serviceDay: "", 
+      setServiceDay: "", 
     };
     this.handleFnameChange = this.handleFnameChange.bind(this);
     this.handleLnameChange = this.handleLnameChange.bind(this);
@@ -216,6 +219,13 @@ class DashboardPage extends Component {
       Email: event.target.value,
     });
   }
+
+  handleChangeServiceDate = (event) => {
+    this.setState({
+      serviceDay: event.target.value,
+    });
+   
+  };
 
   handleClearDataFromNewClientForm() {
     this.setState({
@@ -406,8 +416,9 @@ class DashboardPage extends Component {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          // value={age}
-          // onChange={handleChange}
+          value={this.state.serviceDay}
+           onChange={this.handleChangeServiceDate}
+           autoWidth
         >
           <MenuItem value={10}>Ten</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
