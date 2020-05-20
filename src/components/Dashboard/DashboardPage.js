@@ -417,12 +417,15 @@ class DashboardPage extends Component {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={this.state.serviceDay}
-           onChange={this.handleChangeServiceDate}
-           autoWidth
+          onChange={this.handleChangeServiceDate}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={"Monday"}>Monday</MenuItem>
+          <MenuItem value={"Tuesday"}>Tuesday</MenuItem>
+          <MenuItem value={"Wednesday"}>Wednesday</MenuItem>
+          <MenuItem value={"Thursday"}>Thursday</MenuItem>
+          <MenuItem value={"Friday"}>Friday</MenuItem>
+          <MenuItem value={"Saturday"}>Saturday</MenuItem>
+          <MenuItem value={"Sunday"}>Sunday</MenuItem>
         </Select>
       </FormControl>
               </div>
