@@ -84,6 +84,7 @@ class DashboardPage extends Component {
       Zipcode: "",
       phoneNumber: "",
       Email: "",
+      newClientPrice: "",
 
       clientsFromFire: [],
       isLoaded: false,
@@ -223,6 +224,11 @@ class DashboardPage extends Component {
   handleChangeServiceDate = (event) => {
     this.setState({
       serviceDay2: event.target.value,
+    });   
+  };
+  handleChangeNewClientPrice = (event) => {
+    this.setState({
+      newClientPrice: event.target.value,
     });   
   };
 
@@ -413,7 +419,17 @@ class DashboardPage extends Component {
                   value={this.state.Email}
                   onChange={this.handleChangeEmail}
                 />
-                <FormControl className={classes.formControl}  style={{ minWidth: 260}}>
+                 <TextField
+                  margin="dense"
+                  id="ServicePrice"
+                  label="Service Price"
+                  type="name"
+                  fullWidth
+                  value={this.state.newClientPrice}
+                  onChange={this.handleChangeNewClientPrice}
+                />
+
+                <FormControl className={classes.formControl}   fullWidth>
         <InputLabel id="demo-simple-select-label">Service Date</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -430,6 +446,7 @@ class DashboardPage extends Component {
           <MenuItem value={"Sunday"}>Sunday</MenuItem>
         </Select>
       </FormControl>
+    
               </div>
             </form>
           </DialogContent>
