@@ -315,22 +315,7 @@ class DashboardPage extends Component {
     const classes = withStyles();
     console.log(dateAndTime);
 
-    let currentBalanceCard = (
-      <div>
-        <h1>Current Balance: </h1>
-        <ul>{dateAndTime}</ul>
-        <Button
-          variant="contained"
-          color="default"
-          className={classes.button}
-          startIcon={<AddIcon />}
-          onClick={this.addClientClick}
-        >
-          {" "}
-          New Client
-        </Button>
-      </div>
-    );
+   
 
     return (
       <div className={classes.root}>
