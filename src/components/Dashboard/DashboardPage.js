@@ -33,6 +33,13 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import RestoreIcon from '@material-ui/icons/Restore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+
+
 // import MaterialTableDemo from "./DataTable"
 
 // import  isMobileOnly from 'react-device-detect';
@@ -466,6 +473,20 @@ class DashboardPage extends Component {
         >
           <AddIcon />
         </Fab>
+
+
+        <BottomNavigation
+      // value={value}
+      // onChange={(event, newValue) => {
+      //   setValue(newValue);
+      // }}
+      showLabels
+      className={classes.root}
+    >
+      <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+      <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+      <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+    </BottomNavigation>
       </div>
     );
   }

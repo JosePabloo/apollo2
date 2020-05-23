@@ -51,6 +51,8 @@ import moment from "moment";
 import Snackbar from '@material-ui/core/Snackbar';
 import CloseIcon from '@material-ui/icons/Close';
 
+//TODO: Add Client name to snack bar when service is done. 
+
 const styles = (theme) => ({
   button: {
     margin: theme.spacing(1),
