@@ -291,15 +291,7 @@ class ScheduleView extends Component {
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
-              <Button
-                size="small"
-                color="primary"
-                style={{ textAlign: "right" }}
-                variant="contained"
-                autoFocus
-              >
-                Contact
-              </Button>
+             
               <Button
                 size="small"
                 color="primary"
@@ -324,9 +316,7 @@ class ScheduleView extends Component {
           {
             //TODO: Create a print button}
           }
-          <Button variant="contained" onClick={this.handleClickOpen}>
-          ScheduleView
-          </Button>
+     
         </div>
       );
     }
