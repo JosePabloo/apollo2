@@ -39,6 +39,7 @@ import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 
+import ScheduleView from "./ScheduleView"
 
 // import MaterialTableDemo from "./DataTable"
 
@@ -325,6 +326,11 @@ class DashboardPage extends Component {
     console.log(dateAndTime);
 
  
+    let scheduleView = ( 
+      <Button variant="contained" >
+            Print Month's Service
+          </Button>
+    )
 
 
    
@@ -335,7 +341,7 @@ class DashboardPage extends Component {
 
         {/* this is the code to check if its mobile or not.  */}
         {/* {isMobileOnly ? <ClientList /> :  <MaterialTableDemo />}  */}
-        {BottomNavBarValue ? console.log("ONE") : <ClientList />}
+        {BottomNavBarValue ? <ScheduleView/> : <ClientList />}
        
         <Dialog
           open={this.state.open}

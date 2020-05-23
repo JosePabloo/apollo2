@@ -115,7 +115,7 @@ const options = [
   "S/F Clean Up",
 ];
 
-class ClientList extends Component {
+class ScheduleView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -178,7 +178,7 @@ class ClientList extends Component {
   getClientData = () => {
     let { clientsFromFire } = this.state;
     var db = firestore;
-    db.collection("clients")
+    db.collection("clients").where("ServiceDay", "==", "Monday")
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
@@ -319,13 +319,13 @@ class ClientList extends Component {
       return (
         <div>
           <Button variant="contained" onClick={this.handleClickOpen}>
-            Show Clients
+          ScheduleView
           </Button>
           {
             //TODO: Create a print button}
           }
           <Button variant="contained" onClick={this.handleClickOpen}>
-            Print Month's Service
+          ScheduleView
           </Button>
         </div>
       );
@@ -458,8 +458,8 @@ class ClientList extends Component {
   }
 }
 
-ClientList.propTypes = {
+ScheduleView.propTypes = {
   user: PropTypes.object,
 };
 
-export default withRouter(withStyles(styles)(ClientList));
+export default withRouter(withStyles(styles)(ScheduleView));
