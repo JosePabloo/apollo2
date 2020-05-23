@@ -27,19 +27,19 @@ import ClientList from "./ClientCard";
 
 import Fab from "@material-ui/core/Fab";
 
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
 
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
-import ScheduleView from "./ScheduleView"
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import RestoreIcon from "@material-ui/icons/Restore";
+
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+
+import ScheduleView from "./ScheduleView";
 
 // import MaterialTableDemo from "./DataTable"
 
@@ -71,7 +71,6 @@ const styles = (theme) => ({
     right: 0,
     margin: "0 auto",
   },
-
 });
 
 class DashboardPage extends Component {
@@ -102,10 +101,10 @@ class DashboardPage extends Component {
       isReady: false,
       data: [],
 
-      serviceDay2: "", 
-      setServiceDay: "", 
+      serviceDay2: "",
+      setServiceDay: "",
 
-      BottomNavBarValue: 1
+      BottomNavBarValue: 1,
     };
     this.handleFnameChange = this.handleFnameChange.bind(this);
     this.handleLnameChange = this.handleLnameChange.bind(this);
@@ -234,12 +233,12 @@ class DashboardPage extends Component {
   handleChangeServiceDate = (event) => {
     this.setState({
       serviceDay2: event.target.value,
-    });   
+    });
   };
   handleChangeNewClientPrice = (event) => {
     this.setState({
       newClientPrice: event.target.value,
-    });   
+    });
   };
 
   handleClearDataFromNewClientForm() {
@@ -284,7 +283,7 @@ class DashboardPage extends Component {
       Zipcode,
       Email,
       phoneNumber,
-      serviceDay2
+      serviceDay2,
     } = this.state;
     var db = firestore;
     var flagTrigger = 0;
@@ -309,7 +308,7 @@ class DashboardPage extends Component {
           BillingAddress: { Address: Address, City: City, Zipcode: Zipcode },
           PhoneNumber: phoneNumber,
           Email: Email,
-          ServiceDay: serviceDay2
+          ServiceDay: serviceDay2,
         })
         .catch(function (error) {
           console.log("errirrrr!!!", error);
@@ -320,29 +319,17 @@ class DashboardPage extends Component {
 
   render() {
     let dateAndTime = moment().format("DD/MM/YYYY HH:mm:ss");
-    const {BottomNavBarValue  } = this.state
+    const { BottomNavBarValue } = this.state;
     //const { user } = this.props;
     const classes = withStyles();
     console.log(dateAndTime);
 
- 
-    let scheduleView = ( 
-      <Button variant="contained" >
-            Print Month's Service
-          </Button>
-    )
-
-
-   
-
     return (
       <div className={classes.root}>
-       
-
         {/* this is the code to check if its mobile or not.  */}
         {/* {isMobileOnly ? <ClientList /> :  <MaterialTableDemo />}  */}
-        {BottomNavBarValue ? <ScheduleView/> : <ClientList />}
-       
+        {BottomNavBarValue ? <ScheduleView /> : <ClientList />}
+
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -423,7 +410,7 @@ class DashboardPage extends Component {
                   value={this.state.Email}
                   onChange={this.handleChangeEmail}
                 />
-                 <TextField
+                <TextField
                   margin="dense"
                   id="ServicePrice"
                   label="Service Price"
@@ -433,24 +420,25 @@ class DashboardPage extends Component {
                   onChange={this.handleChangeNewClientPrice}
                 />
 
-                <FormControl className={classes.formControl}   fullWidth>
-        <InputLabel id="demo-simple-select-label">Service Date</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={this.state.serviceDay2}
-          onChange={this.handleChangeServiceDate}
-        >
-          <MenuItem value={"Monday"}>Monday</MenuItem>
-          <MenuItem value={"Tuesday"}>Tuesday</MenuItem>
-          <MenuItem value={"Wednesday"}>Wednesday</MenuItem>
-          <MenuItem value={"Thursday"}>Thursday</MenuItem>
-          <MenuItem value={"Friday"}>Friday</MenuItem>
-          <MenuItem value={"Saturday"}>Saturday</MenuItem>
-          <MenuItem value={"Sunday"}>Sunday</MenuItem>
-        </Select>
-      </FormControl>
-    
+                <FormControl className={classes.formControl} fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Service Date
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={this.state.serviceDay2}
+                    onChange={this.handleChangeServiceDate}
+                  >
+                    <MenuItem value={"Monday"}>Monday</MenuItem>
+                    <MenuItem value={"Tuesday"}>Tuesday</MenuItem>
+                    <MenuItem value={"Wednesday"}>Wednesday</MenuItem>
+                    <MenuItem value={"Thursday"}>Thursday</MenuItem>
+                    <MenuItem value={"Friday"}>Friday</MenuItem>
+                    <MenuItem value={"Saturday"}>Saturday</MenuItem>
+                    <MenuItem value={"Sunday"}>Sunday</MenuItem>
+                  </Select>
+                </FormControl>
               </div>
             </form>
           </DialogContent>
@@ -486,21 +474,20 @@ class DashboardPage extends Component {
           <AddIcon />
         </Fab>
 
-
         <BottomNavigation
-        value={this.state.BottomNavBarValue}
-       onChange={(event, newValue) => {
-        this.setState({
-          BottomNavBarValue: newValue
-        }); 
-      }}
-      showLabels
-      className={classes.root}
-      style={{ bottom: 0, position: "fixed", width: "100%"}}
-    >
-      <BottomNavigationAction label="All Clients" icon={<RestoreIcon />} />
-      <BottomNavigationAction label="Schedule" icon={<LocationOnIcon />} />
-    </BottomNavigation>
+          value={this.state.BottomNavBarValue}
+          onChange={(event, newValue) => {
+            this.setState({
+              BottomNavBarValue: newValue,
+            });
+          }}
+          showLabels
+          className={classes.root}
+          style={{ bottom: 0, position: "fixed", width: "100%" }}
+        >
+          <BottomNavigationAction label="All Clients" icon={<RestoreIcon />} />
+          <BottomNavigationAction label="Schedule" icon={<LocationOnIcon />} />
+        </BottomNavigation>
       </div>
     );
   }

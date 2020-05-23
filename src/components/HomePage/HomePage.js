@@ -13,6 +13,8 @@ import EmptyState from "../EmptyState";
 import { ReactComponent as CabinIllustration } from "../../illustrations/cabin.svg";
 import { ReactComponent as InsertBlockIllustration } from "../../illustrations/insert-block.svg";
 
+import DashboardPage from "../Dashboard/"; 
+
 class HomePage extends Component {
   signInWithEmailLink = () => {
     const { user } = this.props;
@@ -73,7 +75,7 @@ class HomePage extends Component {
     const { user } = this.props;
 
     if (user) {
-      return <EmptyState image={<CabinIllustration />} />;
+      return <DashboardPage />;
     }
 
     return (
