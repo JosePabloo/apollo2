@@ -156,12 +156,21 @@ class ClientList extends Component {
   };
 
   handleClickOpen = () => {
+    this.getClientData();
     this.setState({
       setOpen: true,
       open: true,
       hasDataBeenLoaded: true,
     });
   };
+
+  handleClickRenderDataTable = () => {
+    this.setState({
+      setOpen: true,
+      open: true,
+      hasDataBeenLoaded: true,
+    });
+  }
 
   handleClose = () => {
     this.setState({
@@ -320,14 +329,27 @@ class ClientList extends Component {
 
     if (!hasDataBeenLoaded) {
       return (
+        <div> 
         <div style={{ paddingTop: 250, paddingLeft: 120 }}>
           <Button variant="contained" onClick={this.handleClickOpen}>
             Show Clients
           </Button>
+      
+          {
+            //TODO: Create a print button}
+          }
+         </div>
+
+         <div style={{ paddingTop: 10, paddingLeft: 80 }}>
+          <Button variant="contained" onClick={this.handleClickOpen}>
+            End of the month Report
+          </Button>
+      
           {
             //TODO: Create a print button}
           }
          
+        </div>
         </div>
       );
     }
@@ -410,7 +432,7 @@ class ClientList extends Component {
           <DialogTitle id="alert-dialog-title">{"Success"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              {this.state.clientsFromFire.length} clients have been loaded.
+              clients have been loaded.
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -454,7 +476,7 @@ class ClientList extends Component {
   }
 
   async componentDidMount() {
-    this.getClientData();
+    
     await this.testClientData();
   }
 }
