@@ -165,11 +165,7 @@ class ClientList extends Component {
   };
 
   handleClickRenderDataTable = () => {
-    this.setState({
-      setOpen: true,
-      open: true,
-      hasDataBeenLoaded: true,
-    });
+  console.log("handleClickRenderDataTable")
   }
 
   handleClose = () => {
@@ -341,7 +337,7 @@ class ClientList extends Component {
          </div>
 
          <div style={{ paddingTop: 10, paddingLeft: 80 }}>
-          <Button variant="contained" onClick={this.handleClickOpen}>
+          <Button variant="contained" onClick={this.handleClickRenderDataTable}>
             End of the month Report
           </Button>
       
