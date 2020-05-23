@@ -294,7 +294,7 @@ class ScheduleView extends Component {
                 </Typography>
               </CardContent>
               <CardActions disableSpacing>
-                <Button
+                {/* <Button
                   size="small"
                   color="primary"
                   style={{ textAlign: "right" }}
@@ -302,7 +302,7 @@ class ScheduleView extends Component {
                   autoFocus
                 >
                   Contact
-                </Button>
+                </Button> */}
                 <Button
                   size="small"
                   color="primary"
@@ -321,7 +321,7 @@ class ScheduleView extends Component {
 
     if (!hasDataBeenLoaded) {
       return (
-        <div>
+        <div style={{ paddingTop: 250, paddingLeft: 120 }}>
           <Button variant="contained" onClick={this.handleClickOpen}>
           ScheduleView
           </Button>

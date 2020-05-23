@@ -293,7 +293,7 @@ class ClientList extends Component {
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
-              <Button
+              {/* <Button
                 size="small"
                 color="primary"
                 style={{ textAlign: "right" }}
@@ -301,7 +301,7 @@ class ClientList extends Component {
                 autoFocus
               >
                 Contact
-              </Button>
+              </Button> */}
               <Button
                 size="small"
                 color="primary"
@@ -320,16 +320,14 @@ class ClientList extends Component {
 
     if (!hasDataBeenLoaded) {
       return (
-        <div>
+        <div style={{ paddingTop: 250, paddingLeft: 120 }}>
           <Button variant="contained" onClick={this.handleClickOpen}>
             Show Clients
           </Button>
           {
             //TODO: Create a print button}
           }
-          <Button variant="contained" onClick={this.handleClickOpen}>
-            Print Month's Service
-          </Button>
+         
         </div>
       );
     }
