@@ -482,6 +482,7 @@ class DashboardPage extends Component {
       // }}
       showLabels
       className={classes.root}
+      style={{ bottom: 0, position: "fixed", width: "100%"}}
     >
       <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
       <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
