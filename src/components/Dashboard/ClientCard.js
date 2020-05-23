@@ -48,6 +48,8 @@ import moment from "moment";
 import Snackbar from "@material-ui/core/Snackbar";
 import CloseIcon from "@material-ui/icons/Close";
 
+import MaterialTableDemo from "./DataTable"
+
 //TODO: Add Client name to snack bar when service is done.
 
 const styles = (theme) => ({
@@ -136,6 +138,7 @@ class ClientList extends Component {
       CurrentDate: moment().format("MM/DD/YY"),
       snackbarOpen: false,
       setSnackBarOpen: false,
+      loadFinalMonthView: false
     };
 
     this.consoleTest = this.consoleTest.bind(this);
@@ -164,8 +167,14 @@ class ClientList extends Component {
     });
   };
 
+
+  
   handleClickRenderDataTable = () => {
   console.log("handleClickRenderDataTable")
+  this.setState({
+    loadFinalMonthView: true,
+    hasDataBeenLoaded: true,
+  });
   }
 
   handleClose = () => {
@@ -261,7 +270,7 @@ class ClientList extends Component {
   };
 
   render() {
-    const { hasDataBeenLoaded } = this.state;
+    const { hasDataBeenLoaded,loadFinalMonthView } = this.state;
     const classes = withStyles();
 
     let listItems = (
@@ -348,6 +357,13 @@ class ClientList extends Component {
         </div>
         </div>
       );
+    }
+    if(loadFinalMonthView){
+      return(
+        <div> 
+          <MaterialTableDemo />
+        </div>
+      )
     }
 
     return (
