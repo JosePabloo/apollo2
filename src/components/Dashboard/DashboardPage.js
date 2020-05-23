@@ -103,6 +103,8 @@ class DashboardPage extends Component {
 
       serviceDay2: "", 
       setServiceDay: "", 
+
+      BottomNavBarValue: 1
     };
     this.handleFnameChange = this.handleFnameChange.bind(this);
     this.handleLnameChange = this.handleLnameChange.bind(this);
@@ -317,10 +319,13 @@ class DashboardPage extends Component {
 
   render() {
     let dateAndTime = moment().format("DD/MM/YYYY HH:mm:ss");
-
+    const {BottomNavBarValue  } = this.state
     //const { user } = this.props;
     const classes = withStyles();
     console.log(dateAndTime);
+
+ 
+
 
    
 
@@ -330,7 +335,8 @@ class DashboardPage extends Component {
 
         {/* this is the code to check if its mobile or not.  */}
         {/* {isMobileOnly ? <ClientList /> :  <MaterialTableDemo />}  */}
-        <ClientList />
+        {BottomNavBarValue ? console.log("ONE") : <ClientList />}
+       
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -468,7 +474,7 @@ class DashboardPage extends Component {
         <Fab
           color="primary"
           aria-label="add"
-          style={{ bottom: 75, position: "fixed", right: 20 }}
+          style={{ bottom: 75, position: "fixed", right: 2 }}
           onClick={this.addClientClick}
         >
           <AddIcon />
@@ -476,17 +482,18 @@ class DashboardPage extends Component {
 
 
         <BottomNavigation
-      // value={value}
-      // onChange={(event, newValue) => {
-      //   setValue(newValue);
-      // }}
+        value={this.state.BottomNavBarValue}
+       onChange={(event, newValue) => {
+        this.setState({
+          BottomNavBarValue: newValue
+        }); 
+      }}
       showLabels
       className={classes.root}
       style={{ bottom: 0, position: "fixed", width: "100%"}}
     >
-      <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-      <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-      <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+      <BottomNavigationAction label="All Clients" icon={<RestoreIcon />} />
+      <BottomNavigationAction label="Schedule" icon={<LocationOnIcon />} />
     </BottomNavigation>
       </div>
     );
