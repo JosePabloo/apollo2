@@ -468,7 +468,7 @@ class DashboardPage extends Component {
         <Fab
           color="primary"
           aria-label="add"
-          style={{ bottom: 30, position: "fixed", right: 25 }}
+          style={{ bottom: 75, position: "fixed", right: 20 }}
           onClick={this.addClientClick}
         >
           <AddIcon />
