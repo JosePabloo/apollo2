@@ -261,53 +261,63 @@ class ScheduleView extends Component {
     const classes = withStyles();
 
     let listItems = (
-      <div>
-        {this.state.clientsFromFire.map((user) => (
-          <Card className={classes.root} key={user.id}>
-            <CardHeader
-              action={
-                <IconButton aria-label="settings">
-                  <MoreVertIcon />
-                </IconButton>
-              }
-              title={user.data().LastName + " " + user.data().FristName}
-            />
-
-            <CardContent>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {user.data().BillingAddress.Address +
-                  " " +
-                  user.data().BillingAddress.City +
-                  " " +
-                  user.data().BillingAddress.Zipcode}
-              </Typography>
-              <Divider />
-
-              <Typography variant="body2" color="textSecondary" component="p">
-                {user.data().PhoneNumber}
-              </Typography>
-              <Divider />
-
-              <Typography variant="body2" color="textSecondary" component="p">
-                Service Day is on: {user.data().ServiceDay}
-              </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-             
-              <Button
-                size="small"
-                color="primary"
-                onClick={() => this.consoleTest(user)}
-                variant="contained"
-                autoFocus
-              >
-                Service Completed
-              </Button>
-            </CardActions>
-          </Card>
-        ))}
-      </div>
-    );
+        <div style={{ paddingTop: 20 }}>
+          {this.state.clientsFromFire.map((user) => (
+            <div key={user.id} style={{ paddingTop: 20 }}> 
+            <Card className={classes.root}  >
+              <CardHeader
+                action={
+                  <IconButton aria-label="settings">
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                title={user.data().LastName + " " + user.data().FristName}
+              />
+  
+              <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {user.data().BillingAddress.Address +
+                    " " +
+                    user.data().BillingAddress.City +
+                    " " +
+                    user.data().BillingAddress.Zipcode}
+                </Typography>
+                <Divider />
+  
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {user.data().PhoneNumber}
+                </Typography>
+                <Divider />
+  
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Service Day is on: {user.data().ServiceDay}
+                </Typography>
+              </CardContent>
+              <CardActions disableSpacing>
+                <Button
+                  size="small"
+                  color="primary"
+                  style={{ textAlign: "right" }}
+                  variant="contained"
+                  autoFocus
+                >
+                  Contact
+                </Button>
+                <Button
+                  size="small"
+                  color="primary"
+                  onClick={() => this.consoleTest(user)}
+                  variant="contained"
+                  autoFocus
+                >
+                  Service Completed
+                </Button>
+              </CardActions>
+            </Card>
+            </div>
+          ))}
+        </div>
+      );
 
     if (!hasDataBeenLoaded) {
       return (
