@@ -33,7 +33,6 @@ class Router extends Component {
               <Redirect to="/" />
             )}
           </Route>
-
           <Route path="/user/:userId">
             {user ? <UserPage /> : <Redirect to="/" />}
           </Route>
