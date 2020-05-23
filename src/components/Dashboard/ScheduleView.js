@@ -133,6 +133,7 @@ class ScheduleView extends Component {
       ClientPrice: "ADD A PRICE",
       ClientPriceChangedFlag: false,
       CurrentDate: moment().format("MM/DD/YY"),
+      DayOfTheWeek: moment().format("dddd"),
       snackbarOpen: false,
       setSnackBarOpen: false,
     };
@@ -176,9 +177,9 @@ class ScheduleView extends Component {
   };
 
   getClientData = () => {
-    let { clientsFromFire } = this.state;
+    let { clientsFromFire, DayOfTheWeek } = this.state;
     var db = firestore;
-    db.collection("clients").where("ServiceDay", "==", "Monday")
+    db.collection("clients").where("ServiceDay", "==", DayOfTheWeek)
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
@@ -396,10 +397,11 @@ class ScheduleView extends Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
+            {/* {TODO: add GoodMoring, AfterNoon or, Hello to title} */}
           <DialogTitle id="alert-dialog-title">{"Success"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              {this.state.clientsFromFire.length} clients have been loaded.
+             There are {this.state.clientsFromFire.length} clients for today!
             </DialogContentText>
           </DialogContent>
           <DialogActions>
