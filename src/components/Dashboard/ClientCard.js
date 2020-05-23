@@ -56,7 +56,8 @@ const styles = (theme) => ({
   },
   root: {
     minWidth: 275,
-    paddingTop: 10,
+    paddingTop: 20,
+    
   },
   bullet: {
     display: "inline-block",
@@ -259,9 +260,10 @@ class ClientList extends Component {
     const classes = withStyles();
 
     let listItems = (
-      <div>
+      <div style={{ paddingTop: 20 }}>
         {this.state.clientsFromFire.map((user) => (
-          <Card className={classes.root} key={user.id}>
+          <div key={user.id} style={{ paddingTop: 20 }}> 
+          <Card className={classes.root}  >
             <CardHeader
               action={
                 <IconButton aria-label="settings">
@@ -311,6 +313,7 @@ class ClientList extends Component {
               </Button>
             </CardActions>
           </Card>
+          </div>
         ))}
       </div>
     );
@@ -333,7 +336,7 @@ class ClientList extends Component {
 
     return (
       <div>
-        <Container maxWidth="sm">{listItems}</Container>
+        <Container maxWidth="sm" >{listItems}</Container>
         <Dialog
           open={this.state.openClientWasClicked}
           onClose={this.handleCloseClientModal}

@@ -57,6 +57,7 @@ const styles = (theme) => ({
   root: {
     minWidth: 275,
     paddingTop: 10,
+    
   },
   bullet: {
     display: "inline-block",
