@@ -48,10 +48,25 @@ import moment from "moment";
 import Snackbar from "@material-ui/core/Snackbar";
 import CloseIcon from "@material-ui/icons/Close";
 
-import MaterialTableDemo from "./DataTable"
+import MaterialTableDemo from "./DataTable";
 import { Flag } from "@material-ui/icons";
 
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+
+
+
+import Slide from '@material-ui/core/Slide';
+
 //TODO: Add Client name to snack bar when service is done.
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const styles = (theme) => ({
   button: {
@@ -60,7 +75,6 @@ const styles = (theme) => ({
   root: {
     minWidth: 275,
     paddingTop: 20,
-    
   },
   bullet: {
     display: "inline-block",
@@ -141,11 +155,14 @@ class ClientList extends Component {
       setSnackBarOpen: false,
       loadFinalMonthView: false,
       endReport: [],
+      
 
       editClientViewOpen: false,
-    };
+      clientsServiceRecords: []
+    }
 
     this.consoleTest = this.consoleTest.bind(this);
+    this.getClientServiceRecords = this.getClientServiceRecords.bind(this);
   }
   handleClickModalClientOpen = () => {
     this.setState({
@@ -171,12 +188,9 @@ class ClientList extends Component {
     });
   };
 
-
-  
   handleClickRenderDataTable = () => {
-  console.log("handleClickRenderDataTable")
-  
-  }
+    console.log("handleClickRenderDataTable");
+  };
 
   handleClose = () => {
     this.setState({
@@ -214,18 +228,23 @@ class ClientList extends Component {
       });
   };
 
-  getSecondCollectionFromClient = () => {
-    const SERVICE_RECORDS = "serviceRecords";
-    const CLIENTS = "clients";
+  getClientServiceRecords = theInfo => {
     var db = firestore;
-    db.collection(CLIENTS).doc('0ZffQzH6rsnMBQ7RWJz6').collection(SERVICE_RECORDS)
+    let { clientsServiceRecords } = this.state;
+    var CLIENTS = "clients"
+    var SERVICE_RECORDS = "serviceRecords"
+    db.collection(CLIENTS)
+      .doc(theInfo.id)
+      .collection(SERVICE_RECORDS)
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-        console.log(doc.data())
+          clientsServiceRecords.push(doc);
         });
       });
-  }
+      this.handleEditClientViewOpen()
+      
+  };
 
   consoleTest = (theInfo) => {
     console.log("data(): ", theInfo.data());
@@ -263,7 +282,9 @@ class ClientList extends Component {
     } else {
       console.log("the Client Has not changed the Price!");
     }
-    db.collection(CLIENTS).doc(this.state.ClientInfoFromSelectionID).collection(SERVICE_RECORDS)
+    db.collection(CLIENTS)
+      .doc(this.state.ClientInfoFromSelectionID)
+      .collection(SERVICE_RECORDS)
       .add({
         Client: this.state.ClientInfoFromSelectionID,
         ClientFirstName: this.state.ClientInfoFromSelection.FristName,
@@ -296,46 +317,63 @@ class ClientList extends Component {
     });
   };
 
+  handleEditClientViewOpen = () =>{
+    this.setState({
+      editClientViewOpen: true
+    });
+    console.log("INDISDE", this.state.clientsServiceRecords
+  }
+
+  handleEditClientView = () =>{
+    this.setState({
+      editClientViewOpen: false
+    });
+  }
+
   render() {
-    const { hasDataBeenLoaded,loadFinalMonthView } = this.state;
+    const { hasDataBeenLoaded, loadFinalMonthView } = this.state;
     const classes = withStyles();
 
     let listItems = (
       <div style={{ paddingTop: 20 }}>
         {this.state.clientsFromFire.map((user) => (
-          <div key={user.id} style={{ paddingTop: 20 }}> 
-          <Card className={classes.root}  >
-            <CardHeader
-              action={
-                <IconButton aria-label="settings" onClick = {this.handleClickRenderDataTable}>
-                  <MoreVertIcon />
-                </IconButton>
-              }
-              title={user.data().LastName + " " + user.data().FristName}
-            />
+          <div key={user.id} style={{ paddingTop: 20 }}>
+            <Card className={classes.root}>
+              <CardHeader
+                action={
+                  <IconButton
+                    aria-label="settings"
+                    onClick={() => this.getClientServiceRecords(user)}
+                    
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                title={user.data().LastName + " " + user.data().FristName}
+              />
 
-            <CardContent>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {user.data().BillingAddress.Address +
-                  " " +
-                  user.data().BillingAddress.City +
-                  " " +
-                  user.data().BillingAddress.Zipcode}
-              </Typography>
-              <Divider />
+              <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {user.data().BillingAddress.Address +
+                    " " +
+                    user.data().BillingAddress.City +
+                    " " +
+                    user.data().BillingAddress.Zipcode}
+                </Typography>
+                <Divider />
 
-              <Typography variant="body2" color="textSecondary" component="p">
-                {user.data().PhoneNumber}
-              </Typography>
-              <Divider />
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {user.data().PhoneNumber}
+                </Typography>
+                <Divider />
 
-              <Typography variant="body2" color="textSecondary" component="p">
-                Service Day is on: {user.data().ServiceDay}
-                {console.log(user.data())}
-              </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-              {/* <Button
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Service Day is on: {user.data().ServiceDay}
+                  {console.log(user.data())}
+                </Typography>
+              </CardContent>
+              <CardActions disableSpacing>
+                {/* <Button
                 size="small"
                 color="primary"
                 style={{ textAlign: "right" }}
@@ -344,17 +382,17 @@ class ClientList extends Component {
               >
                 Contact
               </Button> */}
-              <Button
-                size="small"
-                color="primary"
-                onClick={() => this.consoleTest(user)}
-                variant="contained"
-                autoFocus
-              >
-                Service Completed
-              </Button>
-            </CardActions>
-          </Card>
+                <Button
+                  size="small"
+                  color="primary"
+                  onClick={() => this.consoleTest(user)}
+                  variant="contained"
+                  autoFocus
+                >
+                  Service Completed
+                </Button>
+              </CardActions>
+            </Card>
           </div>
         ))}
       </div>
@@ -362,35 +400,36 @@ class ClientList extends Component {
 
     if (!hasDataBeenLoaded) {
       return (
-        <div> 
-        <div style={{ paddingTop: 250, paddingLeft: 120 }}>
-          <Button variant="contained" onClick={this.handleClickOpen}>
-            Show Clients
-          </Button>
-      
-          {
-            //TODO: Create a print button}
-          }
-         </div>
+        <div>
+          <div style={{ paddingTop: 250, paddingLeft: 120 }}>
+            <Button variant="contained" onClick={this.handleClickOpen}>
+              Show Clients
+            </Button>
 
-         <div style={{ paddingTop: 10, paddingLeft: 80 }}>
-          <Button variant="contained" onClick={this.handleClickRenderDataTable}>
-            End of the month Report
-          </Button>
-      
-          {
-            //TODO: Create a print button}
-          }
-         
-        </div>
+            {
+              //TODO: Create a print button}
+            }
+          </div>
+
+          <div style={{ paddingTop: 10, paddingLeft: 80 }}>
+            <Button
+              variant="contained"
+              onClick={this.handleClickRenderDataTable}
+            >
+              End of the month Report
+            </Button>
+
+            {
+              //TODO: Create a print button}
+            }
+          </div>
         </div>
       );
     }
-   
 
     return (
       <div>
-        <Container maxWidth="sm" >{listItems}</Container>
+        <Container maxWidth="sm">{listItems}</Container>
         <Dialog
           open={this.state.openClientWasClicked}
           onClose={this.handleCloseClientModal}
@@ -504,46 +543,53 @@ class ClientList extends Component {
               </IconButton>
             </React.Fragment>
           }
-        
         />
-{//CREATE a FULL SCREEN edit DIALOG that shows if the client has paid
-  }
+        {
+          //CREATE a FULL SCREEN edit DIALOG that shows if the client has paid
+        }
 
-{/* <Dialog fullScreen open={this.state.editClientViewOpen} onClose={this.handleEditClientView} TransitionComponent={Transition}>
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-              <CloseIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              Sound
-            </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
-          </Toolbar>
-        </AppBar>
-        <List>
-          <ListItem button>
-            <ListItemText primary="Phone ringtone" secondary="Titania" />
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-          </ListItem>
-        </List>
-      </Dialog> */}
-
-
-
-
-
+        <Dialog
+          fullScreen
+          open={this.state.editClientViewOpen}
+          onClose={this.handleEditClientView}
+          TransitionComponent={Transition}
+        >
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={this.handleEditClientView}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+              <Typography variant="h6" className={classes.title}>
+                Sound
+              </Typography>
+              <Button autoFocus color="inherit" onClick={this.handleEditClientView}>
+                save
+              </Button>
+            </Toolbar>
+          </AppBar>
+          <List>
+            <ListItem button>
+              <ListItemText primary="Phone ringtone" secondary="Titania" />
+            </ListItem>
+            <Divider />
+            <ListItem button>
+              <ListItemText
+                primary="Default notification ringtone"
+                secondary="Tethys"
+              />
+            </ListItem>
+          </List>
+        </Dialog>
       </div>
     );
   }
 
   async componentDidMount() {
-    this.getSecondCollectionFromClient()
     await this.testClientData();
   }
 }
