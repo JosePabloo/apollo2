@@ -49,6 +49,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import CloseIcon from "@material-ui/icons/Close";
 
 import MaterialTableDemo from "./DataTable"
+import { Flag } from "@material-ui/icons";
 
 //TODO: Add Client name to snack bar when service is done.
 
@@ -138,7 +139,10 @@ class ClientList extends Component {
       CurrentDate: moment().format("MM/DD/YY"),
       snackbarOpen: false,
       setSnackBarOpen: false,
-      loadFinalMonthView: false
+      loadFinalMonthView: false,
+      endReport: [],
+
+      editClientViewOpen: false,
     };
 
     this.consoleTest = this.consoleTest.bind(this);
@@ -171,10 +175,7 @@ class ClientList extends Component {
   
   handleClickRenderDataTable = () => {
   console.log("handleClickRenderDataTable")
-  this.setState({
-    loadFinalMonthView: true,
-    hasDataBeenLoaded: true,
-  });
+  
   }
 
   handleClose = () => {
@@ -190,6 +191,17 @@ class ClientList extends Component {
     });
   };
 
+  getEndOfTheMonthReport = () => {
+    let { endReport } = this.state;
+    var db = firestore;
+    db.collection("serviceRecords")
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          endReport.push(doc);
+        });
+      });
+  };
   getClientData = () => {
     let { clientsFromFire } = this.state;
     var db = firestore;
@@ -201,6 +213,17 @@ class ClientList extends Component {
         });
       });
   };
+
+  getSecondCollectionFromClient = () => {
+    var db = firestore;
+    db.collection("clients").doc('0ZffQzH6rsnMBQ7RWJz6').collection("serviceRecords")
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+        console.log(doc.data())
+        });
+      });
+  }
 
   consoleTest = (theInfo) => {
     console.log("data(): ", theInfo.data());
@@ -236,7 +259,7 @@ class ClientList extends Component {
     } else {
       console.log("the Client Has not changed the Price!");
     }
-    db.collection("serviceRecords")
+    db.collection("clients").doc(this.state.ClientInfoFromSelectionID).collection("serviceRecords")
       .add({
         Client: this.state.ClientInfoFromSelectionID,
         ClientFirstName: this.state.ClientInfoFromSelection.FristName,
@@ -280,7 +303,7 @@ class ClientList extends Component {
           <Card className={classes.root}  >
             <CardHeader
               action={
-                <IconButton aria-label="settings">
+                <IconButton aria-label="settings" onClick = {this.handleClickRenderDataTable}>
                   <MoreVertIcon />
                 </IconButton>
               }
@@ -304,6 +327,7 @@ class ClientList extends Component {
 
               <Typography variant="body2" color="textSecondary" component="p">
                 Service Day is on: {user.data().ServiceDay}
+                {console.log(user.data())}
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -358,13 +382,7 @@ class ClientList extends Component {
         </div>
       );
     }
-    if(loadFinalMonthView){
-      return(
-        <div> 
-          <MaterialTableDemo />
-        </div>
-      )
-    }
+   
 
     return (
       <div>
@@ -482,13 +500,46 @@ class ClientList extends Component {
               </IconButton>
             </React.Fragment>
           }
+        
         />
+{//CREATE a FULL SCREEN edit DIALOG that shows if the client has paid
+  }
+
+{/* <Dialog fullScreen open={this.state.editClientViewOpen} onClose={this.handleEditClientView} TransitionComponent={Transition}>
+        <AppBar className={classes.appBar}>
+          <Toolbar>
+            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              Sound
+            </Typography>
+            <Button autoFocus color="inherit" onClick={handleClose}>
+              save
+            </Button>
+          </Toolbar>
+        </AppBar>
+        <List>
+          <ListItem button>
+            <ListItemText primary="Phone ringtone" secondary="Titania" />
+          </ListItem>
+          <Divider />
+          <ListItem button>
+            <ListItemText primary="Default notification ringtone" secondary="Tethys" />
+          </ListItem>
+        </List>
+      </Dialog> */}
+
+
+
+
+
       </div>
     );
   }
 
   async componentDidMount() {
-    
+    this.getSecondCollectionFromClient()
     await this.testClientData();
   }
 }

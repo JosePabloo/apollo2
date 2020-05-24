@@ -56,12 +56,15 @@ export default function MaterialTableDemo() {
   });
 
   return (
+   
     <MaterialTable
+
       title="DEVELOPING"
       columns={state.columns}
       data={state.data}
       icons={tableIcons}
       editable={{
+        
         onRowAdd: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
