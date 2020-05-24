@@ -548,6 +548,8 @@ class ClientList extends Component {
         />
         {
           //CREATE a FULL SCREEN edit DIALOG that shows if the client has paid
+          //TODO: load the data to the fill screen dialog. 
+          //CLOSE and clear the state of the data when the close or submit button is pressed. 
         }
 
 
