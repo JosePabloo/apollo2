@@ -51,16 +51,14 @@ import CloseIcon from "@material-ui/icons/Close";
 import MaterialTableDemo from "./DataTable";
 import { Flag } from "@material-ui/icons";
 
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItem from "@material-ui/core/ListItem";
+import List from "@material-ui/core/List";
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
 
-
-
-import Slide from '@material-ui/core/Slide';
+import Slide from "@material-ui/core/Slide";
 
 //TODO: Add Client name to snack bar when service is done.
 
@@ -155,11 +153,10 @@ class ClientList extends Component {
       setSnackBarOpen: false,
       loadFinalMonthView: false,
       endReport: [],
-      
 
       editClientViewOpen: false,
-      clientsServiceRecords: []
-    }
+      clientsServiceRecords: [],
+    };
 
     this.consoleTest = this.consoleTest.bind(this);
     this.getClientServiceRecords = this.getClientServiceRecords.bind(this);
@@ -228,11 +225,11 @@ class ClientList extends Component {
       });
   };
 
-  getClientServiceRecords = theInfo => {
+  getClientServiceRecords = (theInfo) => {
     var db = firestore;
     let { clientsServiceRecords } = this.state;
-    var CLIENTS = "clients"
-    var SERVICE_RECORDS = "serviceRecords"
+    var CLIENTS = "clients";
+    var SERVICE_RECORDS = "serviceRecords";
     db.collection(CLIENTS)
       .doc(theInfo.id)
       .collection(SERVICE_RECORDS)
@@ -242,8 +239,7 @@ class ClientList extends Component {
           clientsServiceRecords.push(doc.data());
         });
       });
-      this.handleEditClientViewOpen()
-      
+    this.handleEditClientViewOpen();
   };
 
   consoleTest = (theInfo) => {
@@ -317,18 +313,18 @@ class ClientList extends Component {
     });
   };
 
-  handleEditClientViewOpen = () =>{
+  handleEditClientViewOpen = () => {
     this.setState({
-      editClientViewOpen: true
+      editClientViewOpen: true,
     });
-    console.log("INDISDE", this.state.clientsServiceRecords)
-  }
+    console.log("INDISDE", this.state.clientsServiceRecords);
+  };
 
-  handleEditClientView = () =>{
+  handleEditClientView = () => {
     this.setState({
-      editClientViewOpen: false
+      editClientViewOpen: false,
     });
-  }
+  };
 
   render() {
     const { hasDataBeenLoaded, loadFinalMonthView } = this.state;
@@ -344,7 +340,6 @@ class ClientList extends Component {
                   <IconButton
                     aria-label="settings"
                     onClick={() => this.getClientServiceRecords(user)}
-                    
                   >
                     <MoreVertIcon />
                   </IconButton>
@@ -567,7 +562,11 @@ class ClientList extends Component {
               <Typography variant="h6" className={classes.title}>
                 Sound
               </Typography>
-              <Button autoFocus color="inherit" onClick={this.handleEditClientView}>
+              <Button
+                autoFocus
+                color="inherit"
+                onClick={this.handleEditClientView}
+              >
                 save
               </Button>
             </Toolbar>
