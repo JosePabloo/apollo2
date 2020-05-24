@@ -239,7 +239,7 @@ class ClientList extends Component {
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          clientsServiceRecords.push(doc);
+          clientsServiceRecords.push(doc.data());
         });
       });
       this.handleEditClientViewOpen()
@@ -321,7 +321,7 @@ class ClientList extends Component {
     this.setState({
       editClientViewOpen: true
     });
-    console.log("INDISDE", this.state.clientsServiceRecords
+    console.log("INDISDE", this.state.clientsServiceRecords)
   }
 
   handleEditClientView = () =>{
