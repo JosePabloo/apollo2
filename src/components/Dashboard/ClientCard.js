@@ -448,10 +448,10 @@ class ClientList extends Component {
         </Button>
       </Toolbar>
     </AppBar>
-    <List>
-      {this.state.clientsServiceRecords.map((service) => (
-        <ListItem button>
-        <ListItemText primary="Phone ringtone" secondary="Titania" />
+    <List style={{ padding:  10 }}>
+      {this.state.clientsServiceRecords.map((service, index) => (
+        <ListItem button key={index}>
+        <ListItemText primary={service.ServiceDate} secondary={service.ServicePrice} />
       </ListItem>
        
       ))}
