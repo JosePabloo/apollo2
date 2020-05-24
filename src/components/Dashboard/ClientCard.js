@@ -163,6 +163,8 @@ class ClientList extends Component {
 
       editClientViewOpen: false,
       clientsServiceRecords: [],
+      clientServiceRecordsName: "",
+      editViewLoaded: false,
     };
 
     this.consoleTest = this.consoleTest.bind(this);
@@ -247,7 +249,17 @@ class ClientList extends Component {
         });
       });
     this.handleEditClientViewOpen();
+    this.setClientDataReady()
   };
+  setClientDataReady = () => {
+    this.setState({
+      editViewLoaded: true,
+    });
+  }
+  handleClickOpenClients = () => {
+    console.log("pressed")
+    this.openSnackBarSuccess()
+  }
 
   consoleTest = (theInfo) => {
     console.log("data(): ", theInfo.data());
@@ -330,6 +342,8 @@ class ClientList extends Component {
   handleEditClientView = () => {
     this.setState({
       editClientViewOpen: false,
+      clientsServiceRecords: []
+
     });
   };
 
@@ -400,6 +414,59 @@ class ClientList extends Component {
       </div>
     );
 
+   
+
+    let fullScreenClientEdit = (
+     
+     <div>
+       
+        <Dialog
+    fullScreen
+    open={this.state.editClientViewOpen}
+    onClose={this.handleEditClientView}
+    TransitionComponent={Transition}
+  >
+    <AppBar style={{ position: 'relative' }}>
+      <Toolbar>
+        <IconButton
+          edge="start"
+          color="inherit"
+          onClick={this.handleEditClientView}
+          aria-label="close"
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h6" style={{ marginLeft:  2, flex: 1 }}>
+        edit Client
+        </Typography>
+        <Button
+          autoFocus
+          color="inherit"
+          onClick={this.handleEditClientView}
+        >
+          save
+        </Button>
+      </Toolbar>
+    </AppBar>
+    <List>
+      {this.state.clientsServiceRecords.map((service) => (
+        <ListItem button>
+        <ListItemText primary="Phone ringtone" secondary="Titania" />
+      </ListItem>
+       
+      ))}
+    </List>
+    {this.state.editViewLoaded ?  <div style={{ paddingTop: 720, paddingLeft: 200, position: "fixed" }}>
+            <Button variant="contained" onClick={this.handleClickOpenClients}>
+              Show Clients
+            </Button> </div> : null }
+  
+  </Dialog>
+  
+     </div>
+     
+    );
+
     if (!hasDataBeenLoaded) {
       return (
         <div>
@@ -431,7 +498,7 @@ class ClientList extends Component {
 
     return (
       <div>
-        <Container maxWidth="sm">{listItems}</Container>
+        <Container maxWidth="sm">{listItems} {fullScreenClientEdit}</Container>
         <Dialog
           open={this.state.openClientWasClicked}
           onClose={this.handleCloseClientModal}
@@ -553,47 +620,7 @@ class ClientList extends Component {
         }
 
 
-        <Dialog
-          fullScreen
-          open={this.state.editClientViewOpen}
-          onClose={this.handleEditClientView}
-          TransitionComponent={Transition}
-        >
-          <AppBar style={{ position: 'relative' }}>
-            <Toolbar>
-              <IconButton
-                edge="start"
-                color="inherit"
-                onClick={this.handleEditClientView}
-                aria-label="close"
-              >
-                <CloseIcon />
-              </IconButton>
-              <Typography variant="h6" style={{ marginLeft:  2, flex: 1 }}>
-                Sound
-              </Typography>
-              <Button
-                autoFocus
-                color="inherit"
-                onClick={this.handleEditClientView}
-              >
-                save
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <List>
-            <ListItem button>
-              <ListItemText primary="Phone ringtone" secondary="Titania" />
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <ListItemText
-                primary="Default notification ringtone"
-                secondary="Tethys"
-              />
-            </ListItem>
-          </List>
-        </Dialog>
+    
       </div>
     );
   }
