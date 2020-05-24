@@ -120,6 +120,13 @@ const styles = (theme) => ({
   section3: {
     margin: theme.spacing(3, 1, 1),
   },
+  appBar: {
+    position: 'relative',
+  },
+  title2: {
+    marginLeft: theme.spacing(2),
+    flex: 1,
+  },
 });
 
 const options = [
@@ -543,13 +550,14 @@ class ClientList extends Component {
           //CREATE a FULL SCREEN edit DIALOG that shows if the client has paid
         }
 
+
         <Dialog
           fullScreen
           open={this.state.editClientViewOpen}
           onClose={this.handleEditClientView}
           TransitionComponent={Transition}
         >
-          <AppBar className={classes.appBar}>
+          <AppBar style={{ position: 'relative' }}>
             <Toolbar>
               <IconButton
                 edge="start"
@@ -559,7 +567,7 @@ class ClientList extends Component {
               >
                 <CloseIcon />
               </IconButton>
-              <Typography variant="h6" className={classes.title}>
+              <Typography variant="h6" style={{ marginLeft:  2, flex: 1 }}>
                 Sound
               </Typography>
               <Button
