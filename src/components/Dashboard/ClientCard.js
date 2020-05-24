@@ -215,8 +215,10 @@ class ClientList extends Component {
   };
 
   getSecondCollectionFromClient = () => {
+    const SERVICE_RECORDS = "serviceRecords";
+    const CLIENTS = "clients";
     var db = firestore;
-    db.collection("clients").doc('0ZffQzH6rsnMBQ7RWJz6').collection("serviceRecords")
+    db.collection(CLIENTS).doc('0ZffQzH6rsnMBQ7RWJz6').collection(SERVICE_RECORDS)
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
@@ -252,6 +254,8 @@ class ClientList extends Component {
   };
 
   submitClientServiceDateToDataBase = () => {
+    const SERVICE_RECORDS = "serviceRecords";
+    const CLIENTS = "clients";
     var db = firestore;
     console.log(this.state.ClientInfoFromSelection);
     if (this.state.ClientPriceChangedFlag) {
@@ -259,7 +263,7 @@ class ClientList extends Component {
     } else {
       console.log("the Client Has not changed the Price!");
     }
-    db.collection("clients").doc(this.state.ClientInfoFromSelectionID).collection("serviceRecords")
+    db.collection(CLIENTS).doc(this.state.ClientInfoFromSelectionID).collection(SERVICE_RECORDS)
       .add({
         Client: this.state.ClientInfoFromSelectionID,
         ClientFirstName: this.state.ClientInfoFromSelection.FristName,
